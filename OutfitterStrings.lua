@@ -41,6 +41,8 @@ Outfitter_cBattlegroundOutfit = "Battleground";
 Outfitter_cABOutfit = "Battleground: Arathi Basin";
 Outfitter_cAVOutfit = "Battleground: Alterac Valley";
 Outfitter_cWSGOutfit = "Battleground: Warsong Gulch";
+Outfitter_cBROutfit = "Battleground: Blood Ring";
+Outfitter_cSGVOutfit = "Battleground: Sunnyglade Valley";
 Outfitter_cCityOutfit = "Around Town";
 
 Outfitter_cMountSpeedFormat = "Increases speed by (%d+)%%."; -- For detecting when mounted
@@ -69,6 +71,8 @@ Outfitter_cNaxxramas = "Naxxramas";
 Outfitter_cAlteracValley = "Alterac Valley";
 Outfitter_cArathiBasin = "Arathi Basin";
 Outfitter_cWarsongGulch = "Warsong Gulch";
+Outfitter_cBloodRing = "Blood Ring";
+Outfitter_cSunnygladeValley = "Sunnyglade Valley";
 Outfitter_cIronforge = "Ironforge";
 Outfitter_cCityOfIronforge = "City of Ironforge";
 Outfitter_cDarnassus = "Darnassus";
@@ -241,6 +245,8 @@ Outfitter_cBattlegroundOutfitDescription = "This outfit will automatically be wo
 Outfitter_cArathiBasinOutfitDescription = "This outfit will automatically be worn whenever you're in the Arathi Basin battleground";
 Outfitter_cAlteracValleyOutfitDescription = "This outfit will automatically be worn whenever you're in the Alterac Valley battleground";
 Outfitter_cWarsongGulchOutfitDescription = "This outfit will automatically be worn whenever you're in the Warsong Gulch battleground";
+Outfitter_cBloodRingOutfitDescription = "This outfit will automatically be worn whenever you're in the Blood Ring battleground";
+Outfitter_cSunnygladeValleyOutfitDescription = "This outfit will automatically be worn whenever you're in the Sunnyglade Valley battleground";
 Outfitter_cCityOutfitDescription = "This outfit will automatically be worn whenever you're in a friendly major city";
 
 Outfitter_cKeyBinding = "Key Binding";

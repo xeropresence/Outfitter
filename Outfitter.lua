@@ -366,6 +366,8 @@ local Outfitter_cSpecialOutfitDescriptions =
 	AB = Outfitter_cArathiBasinOutfitDescription,
 	AV = Outfitter_cAlteracValleyOutfitDescription,
 	WSG = Outfitter_cWarsongGulchOutfitDescription,
+	BR = Outfitter_cBloodRingOutfitDescription,
+	SGV = Outfitter_cSunnygladeValleyOutfitDescription,
 	City = Outfitter_cCityOutfitDescription,
 };
 
@@ -383,6 +385,7 @@ local Outfitter_cZoneSpecialIDs =
 	"AV",
 	"AB",
 	"WSG",
+	"BR",
 	"Instance",
 };
 
@@ -396,6 +399,8 @@ local Outfitter_cZoneSpecialIDMap =
 	[Outfitter_cAlteracValley] = {"Battleground", "AV"},
 	[Outfitter_cArathiBasin] = {"Battleground", "AB"},
 	[Outfitter_cWarsongGulch] = {"Battleground", "WSG"},
+	[Outfitter_cBloodRing] = {"Battleground", "BR"},
+	[Outfitter_cSunnygladeValley] = {"Battleground", "SGV"},
 	[Outfitter_cIronforge] = {"City"},
 	[Outfitter_cCityOfIronforge] = {"City"},
 	[Outfitter_cDarnassus] = {"City"},
@@ -4308,6 +4313,8 @@ function Outfitter_InitializeSpecialOccassionOutfits()
 	Outfitter_CreateEmptySpecialOccassionOutfit("AB", Outfitter_cABOutfit);
 	Outfitter_CreateEmptySpecialOccassionOutfit("AV", Outfitter_cAVOutfit);
 	Outfitter_CreateEmptySpecialOccassionOutfit("WSG", Outfitter_cWSGOutfit);
+	Outfitter_CreateEmptySpecialOccassionOutfit("BR", Outfitter_cBROutfit);
+	Outfitter_CreateEmptySpecialOccassionOutfit("SGV", Outfitter_cSGVOutfit);
 	
 	-- Create the city outfit
 	
