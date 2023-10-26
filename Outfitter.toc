@@ -1,5 +1,6 @@
 ## Interface: 11200
 ## Notes: Outfitter
+## Author: |cffbe5effLexie
 ## OptionalDeps: TankPoints
 ## RequiredDeps: 
 ## SavedVariablesPerCharacter: gOutfitter_Settings

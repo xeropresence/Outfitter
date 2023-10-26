@@ -1,4 +1,4 @@
-Outfitter_cVersion = "1.4";
+Outfitter_cVersion = "1.4.1";
 
 Outfitter_cTitle = "Outfitter";
 Outfitter_cTitleVersion = Outfitter_cTitle.." "..Outfitter_cVersion;
@@ -85,6 +85,7 @@ Outfitter_cUndercity = "Undercity";
 Outfitter_cAQ20 = "Ruins of Ahn'Qiraj";
 Outfitter_cAQ40 = "Ahn'Qiraj";
 Outfitter_cZG = "Zul'Gurub";
+Outfitter_cES = "Emerald Sanctum";
 
 Outfitter_cFishingPole = "Fishing Pole";
 Outfitter_cStrongFishingPole = "Strong Fishing Pole";
@@ -132,6 +133,7 @@ Outfitter_cItemStatFormats =
 	
 	{Format = "Minor Mount Speed Increase", Value = 3, Types = {"Riding"}},
 	{Format = "Mithril Spurs", Value = 3, Types = {"Riding"}},
+	{Format = "Thorium Spurs", Value = 5, Types = {"Riding"}},
 	
 	{Format = "%+(%d+) Fire Resistance", Types = {"FireResist"}},
 	{Format = "%+(%d+) Nature Resistance", Types = {"NatureResist"}},
