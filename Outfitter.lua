@@ -170,16 +170,21 @@ local Outfitter_cSpecialtyBags =
 
 local Outfitter_cFishingPoles =
 {
+	{Code = 84507, SubCode = 0}, -- Outfitter_cBarkskinFisher
 	{Code = 19970, SubCode = 0}, -- Outfitter_cArcaniteFishingPole
 	{Code = 19022, SubCode = 0}, -- Outfitter_cNatPaglesFishingPole
 	{Code = 12225, SubCode = 0}, -- Outfitter_cBlumpFishingPole
 	{Code = 6367, SubCode = 0}, -- Outfitter_cBigIronFishingPole
+	{Code = 6366, SubCode = 0}, -- Outfitter_cDarkwoodFishingPole
 	{Code = 6365, SubCode = 0}, -- Outfitter_cStrongFishingPole
 	{Code = 6256, SubCode = 0}, -- Outfitter_cFishingPole
 };
 
 local Outfitter_cRidingItems =
 {
+	{Code = 60501, SubCode = 0}, -- Outfitter_cWhipOfEncouragement
+	{Code = 50525, SubCode = 0}, -- Outfitter_cGoblinCarKey
+	{Code = 50524, SubCode = 0}, -- Outfitter_cGnomeCarKey
 	{Code = 11122, SubCode = 0}, -- Outfitter_cCarrotOnAStick
 };
 
