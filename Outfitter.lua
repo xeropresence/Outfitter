@@ -172,7 +172,7 @@ local Outfitter_cFishingPoles =
 {
 	{Code = 19970, SubCode = 0}, -- Outfitter_cArcaniteFishingPole
 	{Code = 19022, SubCode = 0}, -- Outfitter_cNatPaglesFishingPole
-	{Code = 12224, SubCode = 0}, -- Outfitter_cBlumpFishingPole
+	{Code = 12225, SubCode = 0}, -- Outfitter_cBlumpFishingPole
 	{Code = 6367, SubCode = 0}, -- Outfitter_cBigIronFishingPole
 	{Code = 6365, SubCode = 0}, -- Outfitter_cStrongFishingPole
 	{Code = 6256, SubCode = 0}, -- Outfitter_cFishingPole
