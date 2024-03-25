@@ -370,6 +370,7 @@ local Outfitter_cSpecialOutfitDescriptions =
 	SGV = Outfitter_cSunnygladeValleyOutfitDescription,
 	City = Outfitter_cCityOutfitDescription,
 	Boss = Outfitter_cBossOutfitDescription,
+	Trash = Outfitter_cTrashOutfitDescription,
 };
 
 -- Note that zone special outfits will be worn in the order
@@ -643,7 +644,7 @@ function Outfitter_OnLoad()
 	Outfitter_SuspendEvent(this, "UNIT_HEALTH"); -- Don't actually care until the dining outfit equips
 	Outfitter_SuspendEvent(this, "UNIT_MANA");
 
-	-- For boss outfit
+	-- For boss/trash outfit
 	Outfitter_RegisterEvent(this, "PLAYER_TARGET_CHANGED", Outfitter_TargetChanged);
 
 	-- Tabs
@@ -919,8 +920,10 @@ function Outfitter_TargetChanged()
 	-- -1 indicates ? (lvl 63+) unit
 	if UnitLevel("target") == -1 then
 		Outfitter_SetSpecialOutfitEnabled("Boss", true);
+		Outfitter_SetSpecialOutfitEnabled("Trash", false);
 	else
 		Outfitter_SetSpecialOutfitEnabled("Boss", false);
+		Outfitter_SetSpecialOutfitEnabled("Trash", true);
 	end
 end
 
@@ -4344,6 +4347,14 @@ function Outfitter_InitializeSpecialOccassionOutfits()
 	if not vOutfit then
 		Outfitter_CreateEmptySpecialOccassionOutfit("Boss", Outfitter_cBossOutfit);
 		vOutfit = Outfitter_GetSpecialOutfit("Boss");
+		vOutfit.Disabled = true; -- Disable it by default
+	end
+
+	-- Create trash outfit if needed
+	vOutfit = Outfitter_GetSpecialOutfit("Trash");
+	if not vOutfit then
+		Outfitter_CreateEmptySpecialOccassionOutfit("Trash", Outfitter_cTrashOutfit);
+		vOutfit = Outfitter_GetSpecialOutfit("Trash");
 		vOutfit.Disabled = true; -- Disable it by default
 	end
 end

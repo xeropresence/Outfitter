@@ -44,7 +44,8 @@ Outfitter_cWSGOutfit = "Battleground: Warsong Gulch";
 Outfitter_cBROutfit = "Battleground: Blood Ring";
 Outfitter_cSGVOutfit = "Battleground: Sunnyglade Valley";
 Outfitter_cCityOutfit = "Around Town";
-Outfitter_cBossOutfit = "Boss";
+Outfitter_cBossOutfit = "Boss Mobs";
+Outfitter_cTrashOutfit = "Trash Mobs";
 
 Outfitter_cMountSpeedFormat = "Increases speed by (%d+)%%."; -- For detecting when mounted
 
@@ -252,6 +253,7 @@ Outfitter_cBloodRingOutfitDescription = "This outfit will automatically be worn 
 Outfitter_cSunnygladeValleyOutfitDescription = "This outfit will automatically be worn whenever you're in the Sunnyglade Valley battleground";
 Outfitter_cCityOutfitDescription = "This outfit will automatically be worn whenever you're in a friendly major city";
 Outfitter_cBossOutfitDescription = "This outfit will automatically be worn whenever you target level 63+ mobs";
+Outfitter_cTrashOutfitDescription = "This outfit will automatically be worn whenever you target level <63 mobs";
 
 Outfitter_cKeyBinding = "Key Binding";
 
