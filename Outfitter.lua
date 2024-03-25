@@ -921,9 +921,12 @@ function Outfitter_TargetChanged()
 	if UnitLevel("target") == -1 then
 		Outfitter_SetSpecialOutfitEnabled("Boss", true);
 		Outfitter_SetSpecialOutfitEnabled("Trash", false);
-	else
+	elseif UnitLevel("target") > 0 then
 		Outfitter_SetSpecialOutfitEnabled("Boss", false);
 		Outfitter_SetSpecialOutfitEnabled("Trash", true);
+	else
+		Outfitter_SetSpecialOutfitEnabled("Boss", false);
+		Outfitter_SetSpecialOutfitEnabled("Trash", false);
 	end
 end
 
