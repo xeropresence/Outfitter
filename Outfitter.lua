@@ -369,6 +369,7 @@ local Outfitter_cSpecialOutfitDescriptions =
 	BR = Outfitter_cBloodRingOutfitDescription,
 	SGV = Outfitter_cSunnygladeValleyOutfitDescription,
 	City = Outfitter_cCityOutfitDescription,
+	Boss = Outfitter_cBossOutfitDescription,
 };
 
 -- Note that zone special outfits will be worn in the order
@@ -641,7 +642,10 @@ function Outfitter_OnLoad()
 	
 	Outfitter_SuspendEvent(this, "UNIT_HEALTH"); -- Don't actually care until the dining outfit equips
 	Outfitter_SuspendEvent(this, "UNIT_MANA");
-	
+
+	-- For boss outfit
+	Outfitter_RegisterEvent(this, "PLAYER_TARGET_CHANGED", Outfitter_TargetChanged);
+
 	-- Tabs
 	
 	PanelTemplates_SetNumTabs(this, table.getn(gOutfitter_PanelFrames));
@@ -713,7 +717,7 @@ function Outfitter_PlayerEnteringWorld()
 	Outfitter_RegenEnabled();
 	Outfitter_UpdateAuraStates();
 	Outfitter_SetSpecialOutfitEnabled("Riding", false);
-	
+
 	Outfitter_ResumeLoadScreenEvents();
 end
 
@@ -907,6 +911,16 @@ function Outfitter_UnitHealthOrManaChanged()
 	
 	if vFullHealth and vFullMana then
 		Outfitter_SetSpecialOutfitEnabled("Dining", false);
+	end
+end
+
+function Outfitter_TargetChanged()
+	-- check level of target
+	-- -1 indicates ? (lvl 63+) unit
+	if UnitLevel("target") == -1 then
+		Outfitter_SetSpecialOutfitEnabled("Boss", true);
+	else
+		Outfitter_SetSpecialOutfitEnabled("Boss", false);
 	end
 end
 
@@ -4318,12 +4332,20 @@ function Outfitter_InitializeSpecialOccassionOutfits()
 	Outfitter_CreateEmptySpecialOccassionOutfit("SGV", Outfitter_cSGVOutfit);
 	
 	-- Create the city outfit
-	
+
 	Outfitter_CreateEmptySpecialOccassionOutfit("City", Outfitter_cCityOutfit);
 	
 	-- Create class-specific outfits
 	
 	Outfitter_InitializeClassOutfits();
+
+	-- Create boss outfit if needed
+	vOutfit = Outfitter_GetSpecialOutfit("Boss");
+	if not vOutfit then
+		Outfitter_CreateEmptySpecialOccassionOutfit("Boss", Outfitter_cBossOutfit);
+		vOutfit = Outfitter_GetSpecialOutfit("Boss");
+		vOutfit.Disabled = true; -- Disable it by default
+	end
 end
 
 function Outfitter_InitializeClassOutfits()

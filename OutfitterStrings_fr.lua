@@ -41,6 +41,7 @@ if GetLocale() == "frFR" then
 	Outfitter_cAVOutfit = "Battleground: Alterac Valley";
 	Outfitter_cWSGOutfit = "Battleground: Warsong Gulch";
 	Outfitter_cCityOutfit = "Around Town";
+	Outfitter_cBossOutfit = "Boss";
 
 	Outfitter_cMountSpeedFormat = "Augmente la vitesse de (%d+)%%."; -- For detecting when mounted
 
@@ -231,6 +232,7 @@ if GetLocale() == "frFR" then
 	Outfitter_cAlteracValleyOutfitDescription = "This outfit will automatically be worn whenever you're in the Alterac Valley battleground";
 	Outfitter_cWarsongGulchOutfitDescription = "This outfit will automatically be worn whenever you're in the Warsong Gulch battleground";
 	Outfitter_cCityOutfitDescription = "This outfit will automatically be worn whenever you're in a friendly major city";
+	Outfitter_cBossOutfitDescription = "This outfit will automatically be worn whenever you target level 63+ mobs";
 
 	Outfitter_cKeyBinding = "Raccourcis";
 

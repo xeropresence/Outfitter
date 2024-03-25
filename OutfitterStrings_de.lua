@@ -36,7 +36,8 @@ if GetLocale() == "deDE" then
 	Outfitter_cRidingOutfit = "Reiten";
 	Outfitter_cDiningOutfit = "Ausruhen";
 	Outfitter_cBattlegroundOutfit = "Schlachtfeld";
-	
+	Outfitter_cBossOutfit = "Boss";
+
 	Outfitter_cABOutfit = "Schlachtfeld: Arathibecken";
 	Outfitter_cAVOutfit = "Schlachtfeld: Alteractal";
 	Outfitter_cWSGOutfit = "Schlachtfeld: Warsongschlucht";
@@ -221,6 +222,7 @@ if GetLocale() == "deDE" then
 	Outfitter_cAlteracValleyOutfitDescription = "This outfit will automatically be worn whenever you're in the Alterac Valley battleground";
 	Outfitter_cWarsongGulchOutfitDescription = "This outfit will automatically be worn whenever you're in the Warsong Gulch battleground";
 	Outfitter_cCityOutfitDescription = "This outfit will automatically be worn whenever you're in a friendly major city";
+	Outfitter_cBossOutfitDescription = "This outfit will automatically be worn whenever you target level 63+ mobs";
 
 	Outfitter_cKeyBinding = "Tastaturbelegung";
 
