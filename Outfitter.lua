@@ -922,8 +922,14 @@ function Outfitter_TargetChanged()
 		Outfitter_SetSpecialOutfitEnabled("Boss", true);
 		Outfitter_SetSpecialOutfitEnabled("Trash", false);
 	elseif UnitLevel("target") > 0 then
-		Outfitter_SetSpecialOutfitEnabled("Boss", false);
-		Outfitter_SetSpecialOutfitEnabled("Trash", true);
+		-- check if boss trash
+		if gBossTrashNames[UnitName("target")] then
+			Outfitter_SetSpecialOutfitEnabled("Boss", true);
+			Outfitter_SetSpecialOutfitEnabled("Trash", false);
+		else
+			Outfitter_SetSpecialOutfitEnabled("Boss", false);
+			Outfitter_SetSpecialOutfitEnabled("Trash", true);
+		end
 	else
 		Outfitter_SetSpecialOutfitEnabled("Boss", false);
 		Outfitter_SetSpecialOutfitEnabled("Trash", false);
