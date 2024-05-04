@@ -5,6 +5,8 @@
 ## RequiredDeps: 
 ## SavedVariablesPerCharacter: gOutfitter_Settings
 
+Libs\AceEvent-2.0\AceEvent-2.0.lua
+
 OutfitterStrings.lua
 OutfitterStrings_de.lua
 OutfitterStrings_fr.lua
