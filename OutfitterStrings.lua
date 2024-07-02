@@ -89,15 +89,20 @@ Outfitter_cES = "Emerald Sanctum";
 
 Outfitter_cFishingPole = "Fishing Pole";
 Outfitter_cStrongFishingPole = "Strong Fishing Pole";
+Outfitter_cDarkwoodFishingPole = "Darkwood Fishing Pole";
 Outfitter_cBigIronFishingPole = "Big Iron Fishing Pole";
 Outfitter_cBlumpFishingPole = "Blump Family Fishing Pole";
 Outfitter_cNatPaglesFishingPole = "Nat Pagle's Extreme Angler FC-5000";
 Outfitter_cArcaniteFishingPole = "Arcanite Fishing Pole";
+Outfitter_cBarkskinFisher = "Barkskin Fisher";
 
 Outfitter_cArgentDawnCommission = "Argent Dawn Commission";
 Outfitter_cSealOfTheDawn = "Seal of the Dawn";
 Outfitter_cRuneOfTheDawn = "Rune of the Dawn";
 
+Outfitter_cWhipOfEncouragement = "Whip of Encouragement";
+Outfitter_cGoblinCarKey = "Goblin Car Key";
+Outfitter_cGnomeCarKey = "Gnome Car Key";
 Outfitter_cCarrotOnAStick = "Carrot on a Stick";
 
 Outfitter_cItemStatFormats =
