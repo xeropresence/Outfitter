@@ -349,6 +349,7 @@ local	gOutfitter_SpellNameSpecialID =
 	[Outfitter_cAspectOfThePack] = "Pack",
 	[Outfitter_cAspectOfTheBeast] = "Beast",
 	[Outfitter_cAspectOfTheWild] = "Wild",
+	[Outfitter_cAspectOfTheBeast] = "Beast",
 	[Outfitter_cEvocate] = "Evocate",
 };
 
@@ -360,6 +361,7 @@ local	gOutfitter_AuraIconSpecialID =
 	["Ability_Rogue_FeignDeath"] = "Feigning",
 	["Ability_Hunter_AspectOfTheMonkey"] = "Monkey",
 	["Spell_Nature_RavenForm"] = "Hawk",
+	["Ability_Mount_Pinktiger"] = "Beast",
 };
 
 local Outfitter_cSpecialOutfitDescriptions =
@@ -5182,7 +5184,7 @@ function Outfitter_HookPaperDollFrame()
 	PaperDollItemSlotButton_OnClick = Outfitter_PaperDollItemSlotButton_OnClick
 end
 
-local	Outfitter_cMaxNumQuickSlots = 9;
+local	Outfitter_cMaxNumQuickSlots = 27;
 local	Outfitter_cSlotIDToInventorySlot = nil;
 
 function Outfitter_PaperDollItemSlotButton_OnClick(pButton, pIgnoreModifiers)
@@ -5911,6 +5913,11 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 	
 	local	vBaseWidth = 11;
 	local	vSlotWidth = 42;
+
+	OutfitterQuickSlotsBackEnd1:Show();
+	OutfitterQuickSlotsBackEnd2:Show();
+	OutfitterQuickSlotsBackStart1:Show();
+	OutfitterQuickSlotsBackStart2:Show();
 	
 	for vIndex = 1, pNumSlots do
 		local	vSlotItem = getglobal("OutfitterQuickSlotsItem"..vIndex);
@@ -5919,6 +5926,10 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 		
 		if vIndex == 1 then
 			vSlotItem:SetPoint("TOPLEFT", "OutfitterQuickSlots", "TOPLEFT", 6, -6);
+		elseif vIndex == 10 then
+			vSlotItem:SetPoint("TOPLEFT", "OutfitterQuickSlots", "TOPLEFT", 6, vSlotWidth*-1-12);
+		elseif vIndex == 19 then
+			vSlotItem:SetPoint("TOPLEFT", "OutfitterQuickSlots", "TOPLEFT", 6, -102);
 		else
 			vSlotItem:SetPoint("TOPLEFT", "OutfitterQuickSlotsItem"..(vIndex - 1), "TOPLEFT", vSlotWidth, 0);
 		end
@@ -5929,6 +5940,14 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 	-- Hide the unused slots
 	
 	for vIndex = pNumSlots + 1, Outfitter_cMaxNumQuickSlots do
+		if vIndex == 10 then
+			OutfitterQuickSlotsBackEnd1:Hide();
+			OutfitterQuickSlotsBackStart1:Hide();
+		end
+		if vIndex == 19 then
+			OutfitterQuickSlotsBackEnd2:Hide();
+			OutfitterQuickSlotsBackStart2:Hide();
+		end
 		local	vSlotItem = getglobal("OutfitterQuickSlotsItem"..vIndex);
 		
 		vSlotItem:Hide();
@@ -5936,7 +5955,9 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 	
 	-- Size the frame
 	
-	OutfitterQuickSlots:SetWidth(vBaseWidth + vSlotWidth * pNumSlots);
+	local pNumSlotsTemp = pNumSlots
+	if pNumSlots > 9 then pNumSlotsTemp = 9 end
+	OutfitterQuickSlots:SetWidth(vBaseWidth + vSlotWidth * pNumSlotsTemp);
 	
 	-- Fix the background
 	
@@ -5944,12 +5965,36 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 		for vIndex = 1, pNumSlots - 1 do
 			getglobal("OutfitterQuickSlotsBack"..vIndex):Show();
 		end
-		
-		for vIndex = pNumSlots, Outfitter_cMaxNumQuickSlots - 1 do
+
+		if pNumSlots > 18 then
+			pNumSlotsTemp = pNumSlots-2
+		elseif pNumSlots > 9 then
+			pNumSlotsTemp = pNumSlots-1
+		end
+
+		for vIndex = pNumSlotsTemp, Outfitter_cMaxNumQuickSlots - 1 do
 			getglobal("OutfitterQuickSlotsBack"..vIndex):Hide();
 		end
-		
-		OutfitterQuickSlotsBackEnd:SetPoint("LEFT", "OutfitterQuickSlotsBack"..(pNumSlots - 1), "RIGHT", 0, 0);
+
+		if pNumSlots == 19 then
+			OutfitterQuickSlotsBackEnd2:SetPoint("LEFT", "OutfitterQuickSlotsBackStart2", "RIGHT", 0, 0);
+		else
+			OutfitterQuickSlotsBackEnd2:SetPoint("LEFT", "OutfitterQuickSlotsBack"..(pNumSlotsTemp - 1), "RIGHT", 0, 0);
+		end
+		if pNumSlots == 10 then
+			OutfitterQuickSlotsBackEnd1:SetPoint("LEFT", "OutfitterQuickSlotsBackStart1", "RIGHT", 0, 0);
+		elseif pNumSlots == 1 then
+			OutfitterQuickSlotsBackEnd1:SetPoint("LEFT", "OutfitterQuickSlotsBack16", "RIGHT", 0, 0);
+		elseif pNumSlots < 18 then
+			OutfitterQuickSlotsBackEnd1:SetPoint("LEFT", "OutfitterQuickSlotsBack"..(pNumSlots - 2), "RIGHT", 0, 0);
+		else
+			OutfitterQuickSlotsBackEnd1:SetPoint("LEFT", "OutfitterQuickSlotsBack16", "RIGHT", 0, 0);
+		end
+		if pNumSlots < 9 then
+			OutfitterQuickSlotsBackEnd:SetPoint("LEFT", "OutfitterQuickSlotsBack"..(pNumSlots - 1), "RIGHT", 0, 0);
+		else
+			OutfitterQuickSlotsBackEnd:SetPoint("LEFT", "OutfitterQuickSlotsBack8", "RIGHT", 0, 0);
+		end
 	end
 end
 

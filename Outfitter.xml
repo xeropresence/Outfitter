@@ -1403,6 +1403,32 @@
 					</Anchors>
 					<TexCoords left="0" top="0" right="0.203125" bottom="0.796875"/>
 				</Texture>
+				<Texture name="$parentBackStart1" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="26" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOM" relativeTo="$parentBack0">
+							<Offset>
+								<AbsDimension x="0" y="-48" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0" top="0" right="0.203125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBackStart2" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="26" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOM" relativeTo="$parentBackStart1">
+							<Offset>
+								<AbsDimension x="0" y="-48" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0" top="0" right="0.203125" bottom="0.796875"/>
+				</Texture>
 				<Texture name="$parentBack1" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
 					<Size>
 						<AbsDimension x="42" y="51"/>
@@ -1475,12 +1501,193 @@
 					</Anchors>
 					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
 				</Texture>
+				<Texture name="$parentBack9" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBackStart1" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack10" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack9" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack11" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack10" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack12" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack11" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack13" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack12" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack14" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack13" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack15" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack14" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack16" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack15" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack17" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBackStart2" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				
+				<Texture name="$parentBack18" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack17" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack19" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack18" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack20" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack19" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack21" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack20" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack22" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack21" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack23" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack22" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack24" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack23" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack25" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack24" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBack26" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="42" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack25" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.203125" top="0" right="0.53125" bottom="0.796875"/>
+				</Texture>
 				<Texture name="$parentBackEnd" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
 					<Size>
 						<AbsDimension x="27" y="51"/>
 					</Size>
 					<Anchors>
 						<Anchor point="LEFT" relativeTo="$parentBack8" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.53125" top="0" right="0.7421875" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBackEnd1" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="27" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack16" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.53125" top="0" right="0.7421875" bottom="0.796875"/>
+				</Texture>
+				<Texture name="$parentBackEnd2" file="Interface\Addons\Outfitter\Textures\QuickSlotsBackground">
+					<Size>
+						<AbsDimension x="27" y="51"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentBack26" relativePoint="RIGHT"/>
 					</Anchors>
 					<TexCoords left="0.53125" top="0" right="0.7421875" bottom="0.796875"/>
 				</Texture>
@@ -1496,6 +1703,24 @@
 			<Frame name="$parentItem7" ID="7" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
 			<Frame name="$parentItem8" ID="8" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
 			<Frame name="$parentItem9" ID="9" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem10" ID="10" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem11" ID="11" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem12" ID="12" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem13" ID="13" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem14" ID="14" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem15" ID="15" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem16" ID="16" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem17" ID="17" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem18" ID="18" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem19" ID="19" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem20" ID="20" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem21" ID="21" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem22" ID="22" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem23" ID="23" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem24" ID="24" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem25" ID="25" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem26" ID="26" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
+			<Frame name="$parentItem27" ID="27" hidden="true" inherits="OutfitterQuickSlotItemTemplate"/>
 		</Frames>
 		<Scripts>
 			<OnLoad>
