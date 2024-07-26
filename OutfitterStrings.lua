@@ -1,4 +1,4 @@
-Outfitter_cVersion = "1.4.1";
+Outfitter_cVersion = "1.5.0";
 
 Outfitter_cTitle = "Outfitter";
 Outfitter_cTitleVersion = Outfitter_cTitle.." "..Outfitter_cVersion;
@@ -91,15 +91,20 @@ Outfitter_cES = "Emerald Sanctum";
 
 Outfitter_cFishingPole = "Fishing Pole";
 Outfitter_cStrongFishingPole = "Strong Fishing Pole";
+utfitter_cDarkwoodFishingPole = "Darkwood Fishing Pole";
 Outfitter_cBigIronFishingPole = "Big Iron Fishing Pole";
 Outfitter_cBlumpFishingPole = "Blump Family Fishing Pole";
 Outfitter_cNatPaglesFishingPole = "Nat Pagle's Extreme Angler FC-5000";
 Outfitter_cArcaniteFishingPole = "Arcanite Fishing Pole";
+Outfitter_cBarkskinFisher = "Barkskin Fisher";
 
 Outfitter_cArgentDawnCommission = "Argent Dawn Commission";
 Outfitter_cSealOfTheDawn = "Seal of the Dawn";
 Outfitter_cRuneOfTheDawn = "Rune of the Dawn";
 
+Outfitter_cWhipOfEncouragement = "Whip of Encouragement";
+Outfitter_cGoblinCarKey = "Goblin Car Key";
+Outfitter_cGnomeCarKey = "Gnome Car Key";
 Outfitter_cCarrotOnAStick = "Carrot on a Stick";
 
 Outfitter_cItemStatFormats =
@@ -233,13 +238,13 @@ Outfitter_cEquipOutfitMessageFormat = "Outfitter: %s equipped";
 Outfitter_cUnequipOutfitMessageFormat = "Outfitter: %s unequipped";
 
 Outfitter_cAboutTitle = "About Outfitter";
-Outfitter_cAuthor = "Designed and written by John Stephen";
+Outfitter_cAuthor = "Designed and written by John Stephen\nUpdated for TurtleWoW by |cff5BCEFAL|cffF5A9B8e|cffFFFFFFx|cffF5A9B8i|cff5BCEFAe|r";
 Outfitter_cTestersTitle = "Beta Testers";
 Outfitter_cTestersNames = "Airmid, Desiree, Fizzlebang, Harper, Kallah and Sumitra";
 Outfitter_cSpecialThanksTitle = "Special thanks for their support to";
 Outfitter_cSpecialThanksNames = "Brian, Dave, Glenn, Leah, Mark, The Mighty Pol, SFC and Forge";
-Outfitter_cGuildURL = "http://www.starfleetclan.com";
-Outfitter_cGuildURL2 = "http://www.forgeguild.com";
+Outfitter_cGuildURL = "";
+Outfitter_cGuildURL2 = "";
 
 Outfitter_cOpenOutfitter = "Open Outfitter";
 

@@ -1,5 +1,7 @@
 # Outfitter
-fix for Turtle WoW - Riding Turtle Mount and all dynamic speed mounts
+Outfitter is an equipment management addon which gives you fast access to multiple outfits.
+
+Updated and development continued for Turtle WoW.
 
 # Pepo changes
 - Added small display of current outfits that can be enabled in options

@@ -160,17 +160,24 @@ local Outfitter_cSpecialtyBags = {
 	[22252] = { Name = "Satchel of Cenarious", Type = "Herb" },
 };
 
-local Outfitter_cFishingPoles = {
-	{ Code = 19970, SubCode = 0 }, -- Outfitter_cArcaniteFishingPole
-	{ Code = 19022, SubCode = 0 }, -- Outfitter_cNatPaglesFishingPole
-	{ Code = 12224, SubCode = 0 }, -- Outfitter_cBlumpFishingPole
-	{ Code = 6367, SubCode = 0 }, -- Outfitter_cBigIronFishingPole
-	{ Code = 6365, SubCode = 0 }, -- Outfitter_cStrongFishingPole
-	{ Code = 6256, SubCode = 0 }, -- Outfitter_cFishingPole
+local Outfitter_cFishingPoles =
+{
+	{Code = 84507, SubCode = 0}, -- Outfitter_cBarkskinFisher
+	{Code = 19970, SubCode = 0}, -- Outfitter_cArcaniteFishingPole
+	{Code = 19022, SubCode = 0}, -- Outfitter_cNatPaglesFishingPole
+	{Code = 12225, SubCode = 0}, -- Outfitter_cBlumpFishingPole
+	{Code = 6367, SubCode = 0}, -- Outfitter_cBigIronFishingPole
+	{Code = 6366, SubCode = 0}, -- Outfitter_cDarkwoodFishingPole
+	{Code = 6365, SubCode = 0}, -- Outfitter_cStrongFishingPole
+	{Code = 6256, SubCode = 0}, -- Outfitter_cFishingPole
 };
 
-local Outfitter_cRidingItems = {
-	{ Code = 11122, SubCode = 0 }, -- Outfitter_cCarrotOnAStick
+local Outfitter_cRidingItems =
+{
+	{Code = 60501, SubCode = 0}, -- Outfitter_cWhipOfEncouragement
+	{Code = 50525, SubCode = 0}, -- Outfitter_cGoblinCarKey
+	{Code = 50524, SubCode = 0}, -- Outfitter_cGnomeCarKey
+	{Code = 11122, SubCode = 0}, -- Outfitter_cCarrotOnAStick
 };
 
 local Outfitter_cArgentDawnTrinkets = {
@@ -318,6 +325,7 @@ local gOutfitter_SpellNameSpecialID = {
 	[Outfitter_cAspectOfThePack] = "Pack",
 	[Outfitter_cAspectOfTheBeast] = "Beast",
 	[Outfitter_cAspectOfTheWild] = "Wild",
+	[Outfitter_cAspectOfTheBeast] = "Beast",
 	[Outfitter_cEvocate] = "Evocate",
 };
 
@@ -328,6 +336,7 @@ local gOutfitter_AuraIconSpecialID = {
 	["Ability_Rogue_FeignDeath"] = "Feigning",
 	["Ability_Hunter_AspectOfTheMonkey"] = "Monkey",
 	["Spell_Nature_RavenForm"] = "Hawk",
+	["Ability_Mount_Pinktiger"] = "Beast",
 };
 
 local Outfitter_cSpecialOutfitDescriptions = {
@@ -5267,8 +5276,8 @@ function Outfitter_HookPaperDollFrame()
 	PaperDollItemSlotButton_OnClick = Outfitter_PaperDollItemSlotButton_OnClick
 end
 
-local Outfitter_cMaxNumQuickSlots = 9;
-local Outfitter_cSlotIDToInventorySlot = nil;
+local	Outfitter_cMaxNumQuickSlots = 27;
+local	Outfitter_cSlotIDToInventorySlot = nil;
 
 function Outfitter_PaperDollItemSlotButton_OnClick(pButton, pIgnoreModifiers)
 	-- Build the table to convert from slot ID to inventory slot name
@@ -5998,6 +6007,11 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 	local vBaseWidth = 11;
 	local vSlotWidth = 42;
 
+	OutfitterQuickSlotsBackEnd1:Show();
+	OutfitterQuickSlotsBackEnd2:Show();
+	OutfitterQuickSlotsBackStart1:Show();
+	OutfitterQuickSlotsBackStart2:Show();
+	
 	for vIndex = 1, pNumSlots do
 		local vSlotItem = getglobal("OutfitterQuickSlotsItem" .. vIndex);
 
@@ -6005,6 +6019,10 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 
 		if vIndex == 1 then
 			vSlotItem:SetPoint("TOPLEFT", "OutfitterQuickSlots", "TOPLEFT", 6, -6);
+		elseif vIndex == 10 then
+			vSlotItem:SetPoint("TOPLEFT", "OutfitterQuickSlots", "TOPLEFT", 6, vSlotWidth*-1-12);
+		elseif vIndex == 19 then
+			vSlotItem:SetPoint("TOPLEFT", "OutfitterQuickSlots", "TOPLEFT", 6, -102);
 		else
 			vSlotItem:SetPoint("TOPLEFT", "OutfitterQuickSlotsItem" .. (vIndex - 1), "TOPLEFT", vSlotWidth, 0);
 		end
@@ -6015,14 +6033,24 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 	-- Hide the unused slots
 
 	for vIndex = pNumSlots + 1, Outfitter_cMaxNumQuickSlots do
-		local vSlotItem = getglobal("OutfitterQuickSlotsItem" .. vIndex);
-
+		if vIndex == 10 then
+			OutfitterQuickSlotsBackEnd1:Hide();
+			OutfitterQuickSlotsBackStart1:Hide();
+		end
+		if vIndex == 19 then
+			OutfitterQuickSlotsBackEnd2:Hide();
+			OutfitterQuickSlotsBackStart2:Hide();
+		end
+		local	vSlotItem = getglobal("OutfitterQuickSlotsItem"..vIndex);
+		
 		vSlotItem:Hide();
 	end
 
 	-- Size the frame
 
-	OutfitterQuickSlots:SetWidth(vBaseWidth + vSlotWidth * pNumSlots);
+	local pNumSlotsTemp = pNumSlots
+	if pNumSlots > 9 then pNumSlotsTemp = 9 end
+	OutfitterQuickSlots:SetWidth(vBaseWidth + vSlotWidth * pNumSlotsTemp);
 
 	-- Fix the background
 
@@ -6031,11 +6059,34 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 			getglobal("OutfitterQuickSlotsBack" .. vIndex):Show();
 		end
 
-		for vIndex = pNumSlots, Outfitter_cMaxNumQuickSlots - 1 do
-			getglobal("OutfitterQuickSlotsBack" .. vIndex):Hide();
+		if pNumSlots > 18 then
+			pNumSlotsTemp = pNumSlots-2
+		elseif pNumSlots > 9 then
+			pNumSlotsTemp = pNumSlots-1
 		end
 
-		OutfitterQuickSlotsBackEnd:SetPoint("LEFT", "OutfitterQuickSlotsBack" .. (pNumSlots - 1), "RIGHT", 0, 0);
+		for vIndex = pNumSlotsTemp, Outfitter_cMaxNumQuickSlots - 1 do
+		end
+
+		if pNumSlots == 19 then
+			OutfitterQuickSlotsBackEnd2:SetPoint("LEFT", "OutfitterQuickSlotsBackStart2", "RIGHT", 0, 0);
+		else
+			OutfitterQuickSlotsBackEnd2:SetPoint("LEFT", "OutfitterQuickSlotsBack"..(pNumSlotsTemp - 1), "RIGHT", 0, 0);
+		end
+		if pNumSlots == 10 then
+			OutfitterQuickSlotsBackEnd1:SetPoint("LEFT", "OutfitterQuickSlotsBackStart1", "RIGHT", 0, 0);
+		elseif pNumSlots == 1 then
+			OutfitterQuickSlotsBackEnd1:SetPoint("LEFT", "OutfitterQuickSlotsBack16", "RIGHT", 0, 0);
+		elseif pNumSlots < 18 then
+			OutfitterQuickSlotsBackEnd1:SetPoint("LEFT", "OutfitterQuickSlotsBack"..(pNumSlots - 2), "RIGHT", 0, 0);
+		else
+			OutfitterQuickSlotsBackEnd1:SetPoint("LEFT", "OutfitterQuickSlotsBack16", "RIGHT", 0, 0);
+		end
+		if pNumSlots < 9 then
+			OutfitterQuickSlotsBackEnd:SetPoint("LEFT", "OutfitterQuickSlotsBack"..(pNumSlots - 1), "RIGHT", 0, 0);
+		else
+			OutfitterQuickSlotsBackEnd:SetPoint("LEFT", "OutfitterQuickSlotsBack8", "RIGHT", 0, 0);
+		end
 	end
 end
 
