@@ -1340,6 +1340,13 @@ function Outfitter_SetShowCurrentOutfit(pShowCurrentOutfit)
 	end
 end
 
+function Outfitter_SetHideDisabledOutfits(pHideDisabledOutfits)
+	gOutfitter_Settings.Options.HideDisabledOutfits = pHideDisabledOutfits;
+
+	Outfitter_Update(false);
+end
+
+
 function OutfitterMinimapDropDown_OnLoad()
 	UIDropDownMenu_SetAnchor(3, -7, this, "TOPRIGHT", this:GetName(), "TOPLEFT");
 	UIDropDownMenu_Initialize(this, OutfitterMinimapDropDown_Initialize);
@@ -1830,15 +1837,18 @@ function Outfitter_AddOutfitsToList(pOutfits, pCategoryID, pItemIndex, pFirstIte
 	if not gOutfitter_Collapsed[pCategoryID]
 			and vOutfits then
 		for vIndex, vOutfit in vOutfits do
-			if vFirstItemIndex == 0 then
-				OutfitterItem_SetToOutfit(vItemIndex, vOutfit, pCategoryID, vIndex, pEquippableItems);
-				vItemIndex = vItemIndex + 1;
+			-- skip disabled outfits if the option is set
+			if not vOutfit.Disabled or not gOutfitter_Settings.Options.HideDisabledOutfits then
+				if vFirstItemIndex == 0 then
+					OutfitterItem_SetToOutfit(vItemIndex, vOutfit, pCategoryID, vIndex, pEquippableItems);
+					vItemIndex = vItemIndex + 1;
 
-				if vItemIndex >= Outfitter_cMaxDisplayedItems then
-					return vItemIndex, vFirstItemIndex;
+					if vItemIndex >= Outfitter_cMaxDisplayedItems then
+						return vItemIndex, vFirstItemIndex;
+					end
+				else
+					vFirstItemIndex = vFirstItemIndex - 1;
 				end
-			else
-				vFirstItemIndex = vFirstItemIndex - 1;
 			end
 		end
 	end
@@ -6066,6 +6076,7 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 		end
 
 		for vIndex = pNumSlotsTemp, Outfitter_cMaxNumQuickSlots - 1 do
+			getglobal("OutfitterQuickSlotsBack"..vIndex):Hide();
 		end
 
 		if pNumSlots == 19 then
