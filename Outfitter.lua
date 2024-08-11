@@ -1,5 +1,7 @@
 gOutfitter_Settings = nil;
 
+local AceEvent = AceLibrary:HasInstance("AceEvent-2.0") and AceLibrary("AceEvent-2.0")
+
 local Outfitter_cInitializationEvent = "PLAYER_ENTERING_WORLD";
 
 local BANKED_FONT_COLOR = { r = 0.25, g = 0.2, b = 1.0 };
