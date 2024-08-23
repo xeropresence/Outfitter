@@ -964,7 +964,7 @@ function Outfitter_TargetChangedDelayedEvent()
 		Outfitter_SetSpecialOutfitEnabled("Boss", true);
 		Outfitter_SetSpecialOutfitEnabled("Trash", false);
 		Outfitter_SetSpecialOutfitEnabled("Critter", false);
-	elseif UnitCreatureType("target") == "Critter" then
+	elseif UnitCreatureType("target") == Outfitter_cCritter then
 		Outfitter_SetSpecialOutfitEnabled("Critter", true);
 	elseif UnitLevel("target") > 0 then
 		-- check if boss trash
