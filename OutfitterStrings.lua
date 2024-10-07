@@ -1,7 +1,7 @@
 Outfitter_cVersion = "1.5.0";
 
 Outfitter_cTitle = "Outfitter";
-Outfitter_cTitleVersion = Outfitter_cTitle.." "..Outfitter_cVersion;
+Outfitter_cTitleVersion = Outfitter_cTitle .. " " .. Outfitter_cVersion;
 
 Outfitter_cNameLabel = "Name:";
 Outfitter_cCreateUsingTitle = "Optimize for:";
@@ -46,6 +46,9 @@ Outfitter_cSGVOutfit = "Battleground: Sunnyglade Valley";
 Outfitter_cCityOutfit = "Around Town";
 Outfitter_cBossOutfit = "Boss Mobs";
 Outfitter_cTrashOutfit = "Trash Mobs";
+Outfitter_cBeastTrashOutfit = "Beast Trash Mobs";
+Outfitter_cUndeadTrashOutfit = "Undead Trash Mobs";
+Outfitter_cDemonTrashOutfit = "Demon Trash Mobs";
 
 Outfitter_cMountSpeedFormat = "Increases speed by (%d+)%%."; -- For detecting when mounted
 
@@ -107,81 +110,80 @@ Outfitter_cGoblinCarKey = "Goblin Car Key";
 Outfitter_cGnomeCarKey = "Gnome Car Key";
 Outfitter_cCarrotOnAStick = "Carrot on a Stick";
 
-Outfitter_cItemStatFormats =
-{
-	{Format = "Stamina %+(%d+)", Types = {"Stamina"}},
-	{Format = "Intellect %+(%d+)", Types = {"Intellect"}},
-	{Format = "Agility %+(%d+)", Types = {"Agility"}},
-	{Format = "Strength %+(%d+)", Types = {"Strength"}},
-	{Format = "Spirit %+(%d+)", Types = {"Spirit"}},
-	{Format = "Armor %+(%d+)", Types = {"Armor"}},
-	{Format = "Defense %+(%d+)", Types = {"Defense"}},
-	{Format = "Increased Defense %+(%d+)", Types = {"Defense"}},
-	
-	{Format = "%+(%d+) Stamina", Types = {"Stamina"}},
-	{Format = "%+(%d+) Intellect", Types = {"Intellect"}},
-	{Format = "%+(%d+) Agility", Types = {"Agility"}},
-	{Format = "%+(%d+) Strength", Types = {"Strength"}},
-	{Format = "%+(%d+) Spirit", Types = {"Spirit"}},
-	{Format = "(%d+) Armor", Types = {"Armor"}},
-	{Format = "%+(%d+) Attack Power", Types = {"Attack"}},
-	
-	{Format = "All Stats %+(%d+)", Types = {"Stamina", "Intellect", "Agility", "Strength", "Spirit"}},
-	
-	{Format = "Mana %+(%d+)", Types = {"Mana"}},
-	{Format = "Health %+(%d+)", Types = {"Health"}},
-	
-	{Format = "%+(%d+) mana every 5 sec.", Types = {"ManaRegen"}},
-	{Format = "Restores (%d+) mana per 5 sec.", Types = {"ManaRegen"}},
-	
-	{Format = "%+(%d+) health every 5 sec.", Types = {"HealthRegen"}},
-	{Format = "Restores (%d+) health every 5 sec.", Types = {"HealthRegen"}},
-	{Format = "Restores (%d+) health per 5 sec.", Types = {"HealthRegen"}},
-	
-	{Format = "Minor Mount Speed Increase", Value = 3, Types = {"Riding"}},
-	{Format = "Mithril Spurs", Value = 3, Types = {"Riding"}},
-	{Format = "Thorium Spurs", Value = 5, Types = {"Riding"}},
-	
-	{Format = "%+(%d+) Fire Resistance", Types = {"FireResist"}},
-	{Format = "%+(%d+) Nature Resistance", Types = {"NatureResist"}},
-	{Format = "%+(%d+) Frost Resistance", Types = {"FrostResist"}},
-	{Format = "%+(%d+) Shadow Resistance", Types = {"ShadowResist"}},
-	{Format = "%+(%d+) Arcane Resistance", Types = {"ArcaneResist"}},
-	{Format = "%+(%d+) All Resistances", Types = {"FireResist", "NatureResist", "FrostResist", "ShadowResist", "ArcaneResist"}},
-	
-	{Format = "Weapon Damage %+(%d+)", Types = {"MeleeDmg"}},
-	{Format = "Improves your chance to hit by (%d+)%%", Types = {"MeleeHit"}},
-	{Format = "Improves your chance to get a critical strike by (%d+)%%", Types = {"MeleeCrit"}},
-	{Format = "Increases your chance to dodge an attack by (%d+)%%", Types = {"Dodge"}},
-	{Format = "Damage %+(%d+)", Types = {"MeleeDmg"}},
-	{Format = "(%d+) Block", Types = {"Block"}},
-	{Format = "Block Value %+(%d+)", Types = {"Block"}},
-	{Format = "Increases the block value of your shield by (%d+)", Types = {"Block"}},
-	
-	{Format = "Increased Fishing %+(%d+)%.", Types = {"Fishing"}},
-	{Format = "Fishing %+(%d+)", Types = {"Fishing"}},
-	{Format = "Herbalism %+(%d+)", Types = {"Herbalism"}},
-	{Format = "Mining %+(%d+)", Types = {"Mining"}},
-	{Format = "Skinning %+(%d+)", Types = {"Skinning"}},
-	
-	{Format = "Improves your chance to get a critical strike with spells by (%d+)%%", Types = {"SpellCrit"}},
-	{Format = "Improves your chance to hit with spells by (%d+)%%", Types = {"SpellHit"}},
-	{Format = "Increases damage and healing done by magical spells and effects by up to (%d+)", Types = {"SpellDmg", "ShadowDmg", "FireDmg", "FrostDmg", "ArcaneDmg", "NatureDmg", "Healing"}},
-	{Format = "Increases healing done by spells and effects by up to (%d+)", Types = {"Healing"}},
-	{Format = "Healing Spells %+(%d+)", Types = {"Healing"}},
-	{Format = "%+(%d+) Healing Spells", Types = {"Healing"}},
-	
-	{Format = "%+(%d+) Fire Spell Damage", Types = {"FireDmg"}},
-	{Format = "%+(%d+) Shadow Spell Damage", Types = {"ShadowDmg"}},
-	{Format = "%+(%d+) Frost Spell Damage", Types = {"FrostDmg"}},
-	{Format = "%+(%d+) Arcane Spell Damage", Types = {"ArcaneDmg"}},
-	{Format = "%+(%d+) Nature Spell Damage", Types = {"NatureDmg"}},
+Outfitter_cItemStatFormats = {
+	{ Format = "Stamina %+(%d+)", Types = { "Stamina" } },
+	{ Format = "Intellect %+(%d+)", Types = { "Intellect" } },
+	{ Format = "Agility %+(%d+)", Types = { "Agility" } },
+	{ Format = "Strength %+(%d+)", Types = { "Strength" } },
+	{ Format = "Spirit %+(%d+)", Types = { "Spirit" } },
+	{ Format = "Armor %+(%d+)", Types = { "Armor" } },
+	{ Format = "Defense %+(%d+)", Types = { "Defense" } },
+	{ Format = "Increased Defense %+(%d+)", Types = { "Defense" } },
 
-	{Format = "Increases damage done by Fire spells and effects by up to (%d+)", Types = {"FireDmg"}},
-	{Format = "Increases damage done by Shadow spells and effects by up to (%d+)", Types = {"ShadowDmg"}},
-	{Format = "Increases damage done by Frost spells and effects by up to (%d+)", Types = {"FrostDmg"}},
-	{Format = "Increases damage done by Arcane spells and effects by up to (%d+)", Types = {"ArcaneDmg"}},
-	{Format = "Increases damage done by Nature spells and effects by up to (%d+)", Types = {"NatureDmg"}},
+	{ Format = "%+(%d+) Stamina", Types = { "Stamina" } },
+	{ Format = "%+(%d+) Intellect", Types = { "Intellect" } },
+	{ Format = "%+(%d+) Agility", Types = { "Agility" } },
+	{ Format = "%+(%d+) Strength", Types = { "Strength" } },
+	{ Format = "%+(%d+) Spirit", Types = { "Spirit" } },
+	{ Format = "(%d+) Armor", Types = { "Armor" } },
+	{ Format = "%+(%d+) Attack Power", Types = { "Attack" } },
+
+	{ Format = "All Stats %+(%d+)", Types = { "Stamina", "Intellect", "Agility", "Strength", "Spirit" } },
+
+	{ Format = "Mana %+(%d+)", Types = { "Mana" } },
+	{ Format = "Health %+(%d+)", Types = { "Health" } },
+
+	{ Format = "%+(%d+) mana every 5 sec.", Types = { "ManaRegen" } },
+	{ Format = "Restores (%d+) mana per 5 sec.", Types = { "ManaRegen" } },
+
+	{ Format = "%+(%d+) health every 5 sec.", Types = { "HealthRegen" } },
+	{ Format = "Restores (%d+) health every 5 sec.", Types = { "HealthRegen" } },
+	{ Format = "Restores (%d+) health per 5 sec.", Types = { "HealthRegen" } },
+
+	{ Format = "Minor Mount Speed Increase", Value = 3, Types = { "Riding" } },
+	{ Format = "Mithril Spurs", Value = 3, Types = { "Riding" } },
+	{ Format = "Thorium Spurs", Value = 5, Types = { "Riding" } },
+
+	{ Format = "%+(%d+) Fire Resistance", Types = { "FireResist" } },
+	{ Format = "%+(%d+) Nature Resistance", Types = { "NatureResist" } },
+	{ Format = "%+(%d+) Frost Resistance", Types = { "FrostResist" } },
+	{ Format = "%+(%d+) Shadow Resistance", Types = { "ShadowResist" } },
+	{ Format = "%+(%d+) Arcane Resistance", Types = { "ArcaneResist" } },
+	{ Format = "%+(%d+) All Resistances", Types = { "FireResist", "NatureResist", "FrostResist", "ShadowResist", "ArcaneResist" } },
+
+	{ Format = "Weapon Damage %+(%d+)", Types = { "MeleeDmg" } },
+	{ Format = "Improves your chance to hit by (%d+)%%", Types = { "MeleeHit" } },
+	{ Format = "Improves your chance to get a critical strike by (%d+)%%", Types = { "MeleeCrit" } },
+	{ Format = "Increases your chance to dodge an attack by (%d+)%%", Types = { "Dodge" } },
+	{ Format = "Damage %+(%d+)", Types = { "MeleeDmg" } },
+	{ Format = "(%d+) Block", Types = { "Block" } },
+	{ Format = "Block Value %+(%d+)", Types = { "Block" } },
+	{ Format = "Increases the block value of your shield by (%d+)", Types = { "Block" } },
+
+	{ Format = "Increased Fishing %+(%d+)%.", Types = { "Fishing" } },
+	{ Format = "Fishing %+(%d+)", Types = { "Fishing" } },
+	{ Format = "Herbalism %+(%d+)", Types = { "Herbalism" } },
+	{ Format = "Mining %+(%d+)", Types = { "Mining" } },
+	{ Format = "Skinning %+(%d+)", Types = { "Skinning" } },
+
+	{ Format = "Improves your chance to get a critical strike with spells by (%d+)%%", Types = { "SpellCrit" } },
+	{ Format = "Improves your chance to hit with spells by (%d+)%%", Types = { "SpellHit" } },
+	{ Format = "Increases damage and healing done by magical spells and effects by up to (%d+)", Types = { "SpellDmg", "ShadowDmg", "FireDmg", "FrostDmg", "ArcaneDmg", "NatureDmg", "Healing" } },
+	{ Format = "Increases healing done by spells and effects by up to (%d+)", Types = { "Healing" } },
+	{ Format = "Healing Spells %+(%d+)", Types = { "Healing" } },
+	{ Format = "%+(%d+) Healing Spells", Types = { "Healing" } },
+
+	{ Format = "%+(%d+) Fire Spell Damage", Types = { "FireDmg" } },
+	{ Format = "%+(%d+) Shadow Spell Damage", Types = { "ShadowDmg" } },
+	{ Format = "%+(%d+) Frost Spell Damage", Types = { "FrostDmg" } },
+	{ Format = "%+(%d+) Arcane Spell Damage", Types = { "ArcaneDmg" } },
+	{ Format = "%+(%d+) Nature Spell Damage", Types = { "NatureDmg" } },
+
+	{ Format = "Increases damage done by Fire spells and effects by up to (%d+)", Types = { "FireDmg" } },
+	{ Format = "Increases damage done by Shadow spells and effects by up to (%d+)", Types = { "ShadowDmg" } },
+	{ Format = "Increases damage done by Frost spells and effects by up to (%d+)", Types = { "FrostDmg" } },
+	{ Format = "Increases damage done by Arcane spells and effects by up to (%d+)", Types = { "ArcaneDmg" } },
+	{ Format = "Increases damage done by Nature spells and effects by up to (%d+)", Types = { "NatureDmg" } },
 };
 
 Outfitter_cAgilityStatName = "Agility";
@@ -261,20 +263,23 @@ Outfitter_cSunnygladeValleyOutfitDescription = "This outfit will automatically b
 Outfitter_cCityOutfitDescription = "This outfit will automatically be worn whenever you're in a friendly major city";
 Outfitter_cBossOutfitDescription = "This outfit will automatically be worn whenever you target level 63+ mobs";
 Outfitter_cTrashOutfitDescription = "This outfit will automatically be worn whenever you target level <63 mobs";
+Outfitter_cBeastTrashOutfitDescription = "This outfit will automatically be worn whenever you target beasts level <63 mobs";
+Outfitter_cUndeadTrashOutfitDescription = "This outfit will automatically be worn whenever you target undead level <63 mobs";
+Outfitter_cDemonTrashOutfitDescription = "This outfit will automatically be worn whenever you target demons level <63 mobs";
 
 Outfitter_cKeyBinding = "Key Binding";
 
 BINDING_HEADER_OUTFITTER_TITLE = Outfitter_cTitle;
 
-BINDING_NAME_OUTFITTER_OUTFIT1  = "Outfit 1";
-BINDING_NAME_OUTFITTER_OUTFIT2  = "Outfit 2";
-BINDING_NAME_OUTFITTER_OUTFIT3  = "Outfit 3";
-BINDING_NAME_OUTFITTER_OUTFIT4  = "Outfit 4";
-BINDING_NAME_OUTFITTER_OUTFIT5  = "Outfit 5";
-BINDING_NAME_OUTFITTER_OUTFIT6  = "Outfit 6";
-BINDING_NAME_OUTFITTER_OUTFIT7  = "Outfit 7";
-BINDING_NAME_OUTFITTER_OUTFIT8  = "Outfit 8";
-BINDING_NAME_OUTFITTER_OUTFIT9  = "Outfit 9";
+BINDING_NAME_OUTFITTER_OUTFIT1 = "Outfit 1";
+BINDING_NAME_OUTFITTER_OUTFIT2 = "Outfit 2";
+BINDING_NAME_OUTFITTER_OUTFIT3 = "Outfit 3";
+BINDING_NAME_OUTFITTER_OUTFIT4 = "Outfit 4";
+BINDING_NAME_OUTFITTER_OUTFIT5 = "Outfit 5";
+BINDING_NAME_OUTFITTER_OUTFIT6 = "Outfit 6";
+BINDING_NAME_OUTFITTER_OUTFIT7 = "Outfit 7";
+BINDING_NAME_OUTFITTER_OUTFIT8 = "Outfit 8";
+BINDING_NAME_OUTFITTER_OUTFIT9 = "Outfit 9";
 BINDING_NAME_OUTFITTER_OUTFIT10 = "Outfit 10";
 
 Outfitter_cDisableOutfit = "Disable Outfit";
@@ -327,11 +332,11 @@ Outfitter_cRogueStealth = "Rogue: Stealth";
 Outfitter_cShamanGhostWolf = "Shaman: Ghost Wolf";
 
 Outfitter_cHunterMonkey = "Hunter: Monkey";
-Outfitter_cHunterHawk =  "Hunter: Hawk";
-Outfitter_cHunterCheetah =  "Hunter: Cheetah";
-Outfitter_cHunterPack =  "Hunter: Pack";
-Outfitter_cHunterBeast =  "Hunter: Beast";
-Outfitter_cHunterWild =  "Hunter: Wild";
+Outfitter_cHunterHawk = "Hunter: Hawk";
+Outfitter_cHunterCheetah = "Hunter: Cheetah";
+Outfitter_cHunterPack = "Hunter: Pack";
+Outfitter_cHunterBeast = "Hunter: Beast";
+Outfitter_cHunterWild = "Hunter: Wild";
 
 Outfitter_cMageEvocate = "Mage: Evocate";
 

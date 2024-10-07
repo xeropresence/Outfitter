@@ -160,24 +160,22 @@ local Outfitter_cSpecialtyBags = {
 	[22252] = { Name = "Satchel of Cenarious", Type = "Herb" },
 };
 
-local Outfitter_cFishingPoles =
-{
-	{Code = 84507, SubCode = 0}, -- Outfitter_cBarkskinFisher
-	{Code = 19970, SubCode = 0}, -- Outfitter_cArcaniteFishingPole
-	{Code = 19022, SubCode = 0}, -- Outfitter_cNatPaglesFishingPole
-	{Code = 12225, SubCode = 0}, -- Outfitter_cBlumpFishingPole
-	{Code = 6367, SubCode = 0}, -- Outfitter_cBigIronFishingPole
-	{Code = 6366, SubCode = 0}, -- Outfitter_cDarkwoodFishingPole
-	{Code = 6365, SubCode = 0}, -- Outfitter_cStrongFishingPole
-	{Code = 6256, SubCode = 0}, -- Outfitter_cFishingPole
+local Outfitter_cFishingPoles = {
+	{ Code = 84507, SubCode = 0 }, -- Outfitter_cBarkskinFisher
+	{ Code = 19970, SubCode = 0 }, -- Outfitter_cArcaniteFishingPole
+	{ Code = 19022, SubCode = 0 }, -- Outfitter_cNatPaglesFishingPole
+	{ Code = 12225, SubCode = 0 }, -- Outfitter_cBlumpFishingPole
+	{ Code = 6367, SubCode = 0 }, -- Outfitter_cBigIronFishingPole
+	{ Code = 6366, SubCode = 0 }, -- Outfitter_cDarkwoodFishingPole
+	{ Code = 6365, SubCode = 0 }, -- Outfitter_cStrongFishingPole
+	{ Code = 6256, SubCode = 0 }, -- Outfitter_cFishingPole
 };
 
-local Outfitter_cRidingItems =
-{
-	{Code = 60501, SubCode = 0}, -- Outfitter_cWhipOfEncouragement
-	{Code = 50525, SubCode = 0}, -- Outfitter_cGoblinCarKey
-	{Code = 50524, SubCode = 0}, -- Outfitter_cGnomeCarKey
-	{Code = 11122, SubCode = 0}, -- Outfitter_cCarrotOnAStick
+local Outfitter_cRidingItems = {
+	{ Code = 60501, SubCode = 0 }, -- Outfitter_cWhipOfEncouragement
+	{ Code = 50525, SubCode = 0 }, -- Outfitter_cGoblinCarKey
+	{ Code = 50524, SubCode = 0 }, -- Outfitter_cGnomeCarKey
+	{ Code = 11122, SubCode = 0 }, -- Outfitter_cCarrotOnAStick
 };
 
 local Outfitter_cArgentDawnTrinkets = {
@@ -352,6 +350,9 @@ local Outfitter_cSpecialOutfitDescriptions = {
 	City = Outfitter_cCityOutfitDescription,
 	Boss = Outfitter_cBossOutfitDescription,
 	Trash = Outfitter_cTrashOutfitDescription,
+	BeastTrash = Outfitter_cBeastTrashOutfitDescription,
+	UndeadTrash = Outfitter_cUndeadTrashOutfitDescription,
+	DemonTrash = Outfitter_cDemonTrashOutfitDescription,
 };
 
 -- Note that zone special outfits will be worn in the order
@@ -950,7 +951,7 @@ function Outfitter_TargetChangedDelayedEvent()
 	local newTarget = UnitName("target");
 	-- check if target actually changed
 	if newTarget == gOutfitter_CurrentTarget then
-		return;
+		return ;
 	end
 
 	gOutfitter_CurrentTarget = newTarget;
@@ -960,21 +961,49 @@ function Outfitter_TargetChangedDelayedEvent()
 	if UnitLevel("target") == -1 then
 		Outfitter_SetSpecialOutfitEnabled("Boss", true);
 		Outfitter_SetSpecialOutfitEnabled("Trash", false);
+		Outfitter_SetSpecialOutfitEnabled("BeastTrash", false);
+		Outfitter_SetSpecialOutfitEnabled("UndeadTrash", false);
+		Outfitter_SetSpecialOutfitEnabled("DemonTrash", false);
 	elseif UnitLevel("target") > 0 then
 		-- check if boss trash
 		if gBossTrashNames[UnitName("target")] then
 			Outfitter_SetSpecialOutfitEnabled("Boss", true);
 			Outfitter_SetSpecialOutfitEnabled("Trash", false);
+			Outfitter_SetSpecialOutfitEnabled("BeastTrash", false);
+			Outfitter_SetSpecialOutfitEnabled("UndeadTrash", false);
+			Outfitter_SetSpecialOutfitEnabled("DemonTrash", false);
 		else
 			Outfitter_SetSpecialOutfitEnabled("Boss", false);
 			Outfitter_SetSpecialOutfitEnabled("Trash", true);
+
+			local creatureType = UnitCreatureType("target");
+			-- check if undead trash
+			if creatureType == "Beast" then
+				Outfitter_SetSpecialOutfitEnabled("BeastTrash", true);
+				Outfitter_SetSpecialOutfitEnabled("UndeadTrash", false);
+				Outfitter_SetSpecialOutfitEnabled("DemonTrash", false);
+			elseif creatureType == "Undead" then
+				Outfitter_SetSpecialOutfitEnabled("BeastTrash", false);
+				Outfitter_SetSpecialOutfitEnabled("UndeadTrash", true);
+				Outfitter_SetSpecialOutfitEnabled("DemonTrash", false);
+			elseif creatureType == "Demon" then
+				Outfitter_SetSpecialOutfitEnabled("BeastTrash", false);
+				Outfitter_SetSpecialOutfitEnabled("UndeadTrash", false);
+				Outfitter_SetSpecialOutfitEnabled("DemonTrash", true);
+			else
+				Outfitter_SetSpecialOutfitEnabled("BeastTrash", false);
+				Outfitter_SetSpecialOutfitEnabled("UndeadTrash", false);
+				Outfitter_SetSpecialOutfitEnabled("DemonTrash", false);
+			end
 		end
 	else
 		Outfitter_SetSpecialOutfitEnabled("Boss", false);
 		Outfitter_SetSpecialOutfitEnabled("Trash", false);
+		Outfitter_SetSpecialOutfitEnabled("BeastTrash", false);
+		Outfitter_SetSpecialOutfitEnabled("UndeadTrash", false);
+		Outfitter_SetSpecialOutfitEnabled("DemonTrash", false);
 	end
 end
-
 
 function Outfitter_InventoryChanged(pEvent)
 	if arg1 ~= "player" then
@@ -1345,7 +1374,6 @@ function Outfitter_SetHideDisabledOutfits(pHideDisabledOutfits)
 
 	Outfitter_Update(false);
 end
-
 
 function OutfitterMinimapDropDown_OnLoad()
 	UIDropDownMenu_SetAnchor(3, -7, this, "TOPRIGHT", this:GetName(), "TOPLEFT");
@@ -4432,6 +4460,30 @@ function Outfitter_InitializeSpecialOccassionOutfits()
 		vOutfit = Outfitter_GetSpecialOutfit("Trash");
 		vOutfit.Disabled = true; -- Disable it by default
 	end
+
+	-- Create beast trash outfit if needed
+	vOutfit = Outfitter_GetSpecialOutfit("BeastTrash");
+	if not vOutfit then
+		Outfitter_CreateEmptySpecialOccassionOutfit("BeastTrash", Outfitter_cBeastTrashOutfit);
+		vOutfit = Outfitter_GetSpecialOutfit("BeastTrash");
+		vOutfit.Disabled = true; -- Disable it by default
+	end
+
+	-- Create Undead trash outfit if needed
+	vOutfit = Outfitter_GetSpecialOutfit("UndeadTrash");
+	if not vOutfit then
+		Outfitter_CreateEmptySpecialOccassionOutfit("UndeadTrash", Outfitter_cUndeadTrashOutfit);
+		vOutfit = Outfitter_GetSpecialOutfit("UndeadTrash");
+		vOutfit.Disabled = true; -- Disable it by default
+	end
+
+	-- Create Demon trash outfit if needed
+	vOutfit = Outfitter_GetSpecialOutfit("DemonTrash");
+	if not vOutfit then
+		Outfitter_CreateEmptySpecialOccassionOutfit("DemonTrash", Outfitter_cDemonTrashOutfit);
+		vOutfit = Outfitter_GetSpecialOutfit("DemonTrash");
+		vOutfit.Disabled = true; -- Disable it by default
+	end
 end
 
 function Outfitter_InitializeClassOutfits()
@@ -5286,8 +5338,8 @@ function Outfitter_HookPaperDollFrame()
 	PaperDollItemSlotButton_OnClick = Outfitter_PaperDollItemSlotButton_OnClick
 end
 
-local	Outfitter_cMaxNumQuickSlots = 27;
-local	Outfitter_cSlotIDToInventorySlot = nil;
+local Outfitter_cMaxNumQuickSlots = 27;
+local Outfitter_cSlotIDToInventorySlot = nil;
 
 function Outfitter_PaperDollItemSlotButton_OnClick(pButton, pIgnoreModifiers)
 	-- Build the table to convert from slot ID to inventory slot name
@@ -6021,7 +6073,7 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 	OutfitterQuickSlotsBackEnd2:Show();
 	OutfitterQuickSlotsBackStart1:Show();
 	OutfitterQuickSlotsBackStart2:Show();
-	
+
 	for vIndex = 1, pNumSlots do
 		local vSlotItem = getglobal("OutfitterQuickSlotsItem" .. vIndex);
 
@@ -6030,7 +6082,7 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 		if vIndex == 1 then
 			vSlotItem:SetPoint("TOPLEFT", "OutfitterQuickSlots", "TOPLEFT", 6, -6);
 		elseif vIndex == 10 then
-			vSlotItem:SetPoint("TOPLEFT", "OutfitterQuickSlots", "TOPLEFT", 6, vSlotWidth*-1-12);
+			vSlotItem:SetPoint("TOPLEFT", "OutfitterQuickSlots", "TOPLEFT", 6, vSlotWidth * -1 - 12);
 		elseif vIndex == 19 then
 			vSlotItem:SetPoint("TOPLEFT", "OutfitterQuickSlots", "TOPLEFT", 6, -102);
 		else
@@ -6051,15 +6103,17 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 			OutfitterQuickSlotsBackEnd2:Hide();
 			OutfitterQuickSlotsBackStart2:Hide();
 		end
-		local	vSlotItem = getglobal("OutfitterQuickSlotsItem"..vIndex);
-		
+		local vSlotItem = getglobal("OutfitterQuickSlotsItem" .. vIndex);
+
 		vSlotItem:Hide();
 	end
 
 	-- Size the frame
 
 	local pNumSlotsTemp = pNumSlots
-	if pNumSlots > 9 then pNumSlotsTemp = 9 end
+	if pNumSlots > 9 then
+		pNumSlotsTemp = 9
+	end
 	OutfitterQuickSlots:SetWidth(vBaseWidth + vSlotWidth * pNumSlotsTemp);
 
 	-- Fix the background
@@ -6070,31 +6124,31 @@ function OutfitterQuickSlots_SetNumSlots(pNumSlots)
 		end
 
 		if pNumSlots > 18 then
-			pNumSlotsTemp = pNumSlots-2
+			pNumSlotsTemp = pNumSlots - 2
 		elseif pNumSlots > 9 then
-			pNumSlotsTemp = pNumSlots-1
+			pNumSlotsTemp = pNumSlots - 1
 		end
 
 		for vIndex = pNumSlotsTemp, Outfitter_cMaxNumQuickSlots - 1 do
-			getglobal("OutfitterQuickSlotsBack"..vIndex):Hide();
+			getglobal("OutfitterQuickSlotsBack" .. vIndex):Hide();
 		end
 
 		if pNumSlots == 19 then
 			OutfitterQuickSlotsBackEnd2:SetPoint("LEFT", "OutfitterQuickSlotsBackStart2", "RIGHT", 0, 0);
 		else
-			OutfitterQuickSlotsBackEnd2:SetPoint("LEFT", "OutfitterQuickSlotsBack"..(pNumSlotsTemp - 1), "RIGHT", 0, 0);
+			OutfitterQuickSlotsBackEnd2:SetPoint("LEFT", "OutfitterQuickSlotsBack" .. (pNumSlotsTemp - 1), "RIGHT", 0, 0);
 		end
 		if pNumSlots == 10 then
 			OutfitterQuickSlotsBackEnd1:SetPoint("LEFT", "OutfitterQuickSlotsBackStart1", "RIGHT", 0, 0);
 		elseif pNumSlots == 1 then
 			OutfitterQuickSlotsBackEnd1:SetPoint("LEFT", "OutfitterQuickSlotsBack16", "RIGHT", 0, 0);
 		elseif pNumSlots < 18 then
-			OutfitterQuickSlotsBackEnd1:SetPoint("LEFT", "OutfitterQuickSlotsBack"..(pNumSlots - 2), "RIGHT", 0, 0);
+			OutfitterQuickSlotsBackEnd1:SetPoint("LEFT", "OutfitterQuickSlotsBack" .. (pNumSlots - 2), "RIGHT", 0, 0);
 		else
 			OutfitterQuickSlotsBackEnd1:SetPoint("LEFT", "OutfitterQuickSlotsBack16", "RIGHT", 0, 0);
 		end
 		if pNumSlots < 9 then
-			OutfitterQuickSlotsBackEnd:SetPoint("LEFT", "OutfitterQuickSlotsBack"..(pNumSlots - 1), "RIGHT", 0, 0);
+			OutfitterQuickSlotsBackEnd:SetPoint("LEFT", "OutfitterQuickSlotsBack" .. (pNumSlots - 1), "RIGHT", 0, 0);
 		else
 			OutfitterQuickSlotsBackEnd:SetPoint("LEFT", "OutfitterQuickSlotsBack8", "RIGHT", 0, 0);
 		end

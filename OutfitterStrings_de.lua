@@ -38,6 +38,9 @@ if GetLocale() == "deDE" then
 	Outfitter_cBattlegroundOutfit = "Schlachtfeld";
 	Outfitter_cBossOutfit = "Boss Mobs";
 	Outfitter_cTrashOutfit = "Trash Mobs";
+	Outfitter_cBeastTrashOutfit = "Beast Trash Mobs";
+	Outfitter_cUndeadTrashOutfit = "Undead Trash Mobs";
+	Outfitter_cDemonTrashOutfit = "Demon Trash Mobs";
 
 	Outfitter_cABOutfit = "Schlachtfeld: Arathibecken";
 	Outfitter_cAVOutfit = "Schlachtfeld: Alteractal";
@@ -224,6 +227,9 @@ if GetLocale() == "deDE" then
 	Outfitter_cCityOutfitDescription = "This outfit will automatically be worn whenever you're in a friendly major city";
 	Outfitter_cBossOutfitDescription = "This outfit will automatically be worn whenever you target level 63+ mobs";
 	Outfitter_cTrashOutfitDescription = "This outfit will automatically be worn whenever you target level <63 mobs";
+	Outfitter_cBeastTrashOutfitDescription = "This outfit will automatically be worn whenever you target beasts level <63 mobs";
+	Outfitter_cUndeadTrashOutfitDescription = "This outfit will automatically be worn whenever you target undead level <63 mobs";
+	Outfitter_cDemonTrashOutfitDescription = "This outfit will automatically be worn whenever you target demons level <63 mobs";
 
 	Outfitter_cKeyBinding = "Tastaturbelegung";
 

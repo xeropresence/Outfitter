@@ -43,6 +43,9 @@ if GetLocale() == "koKR" then
 	Outfitter_cCityOutfit = "마을 주변";
 	Outfitter_cBossOutfit = "Boss Mobs";
 	Outfitter_cTrashOutfit = "Trash Mobs";
+	Outfitter_cBeastTrashOutfit = "Beast Trash Mobs";
+	Outfitter_cUndeadTrashOutfit = "Undead Trash Mobs";
+	Outfitter_cDemonTrashOutfit = "Demon Trash Mobs";
 
 	Outfitter_cMountSpeedFormat = "이동 속도 (%d+)%%만큼 증가"; -- For detecting when mounted
 
@@ -239,6 +242,9 @@ if GetLocale() == "koKR" then
 	Outfitter_cCityOutfitDescription = "이 세트는 우호적인 대도시에 있을 때 자동으로 착용 됩니다.";
 	Outfitter_cBossOutfitDescription = "This outfit will automatically be worn whenever you target level 63+ mobs";
 	Outfitter_cTrashOutfitDescription = "This outfit will automatically be worn whenever you target level <63 mobs";
+	Outfitter_cBeastTrashOutfitDescription = "This outfit will automatically be worn whenever you target beasts level <63 mobs";
+	Outfitter_cUndeadTrashOutfitDescription = "This outfit will automatically be worn whenever you target undead level <63 mobs";
+	Outfitter_cDemonTrashOutfitDescription = "This outfit will automatically be worn whenever you target demons level <63 mobs";
 
 	Outfitter_cKeyBinding = "단축키";
 
