@@ -547,7 +547,19 @@ StaticPopupDialogs["OUTFITTER_CONFIRM_DELETE"] = {
 	hideOnEscape = 1
 };
 
-StaticPopupDialogs["OUTFITTER_CONFIRM_REBUILD"] = {
+StaticPopupDialogs["OUTFITTER_CONFIRM_UPDATE"] =
+{
+	text = TEXT(Outfitter_cConfirmUpdateMsg),
+	button1 = TEXT(Outfitter_cUpdate),
+	button2 = TEXT(CANCEL),
+	OnAccept = function() Outfitter_UpdateSelectedOutfit(); end,
+	timeout = 0,
+	whileDead = 1,
+	hideOnEscape = 1
+};
+
+StaticPopupDialogs["OUTFITTER_CONFIRM_REBUILD"] =
+{
 	text = TEXT(Outfitter_cConfirmRebuildMsg),
 	button1 = TEXT(Outfitter_cRebuild),
 	button2 = TEXT(CANCEL),
@@ -1197,6 +1209,21 @@ function Outfitter_DeleteSelectedOutfit()
 	Outfitter_Update(true);
 end
 
+function Outfitter_AskUpdateOutfit(pOutfit)
+	gOutfitter_OutfitToUpdate = pOutfit;
+	StaticPopup_Show("OUTFITTER_CONFIRM_UPDATE", gOutfitter_OutfitToUpdate.Name);
+end
+
+function Outfitter_UpdateSelectedOutfit()
+	if not gOutfitter_OutfitToUpdate then
+		return;
+	end
+
+	Outfitter_UpdateOutfit(gOutfitter_OutfitToUpdate);
+
+	Outfitter_Update(true);
+end
+
 function Outfitter_ShowPanel(pPanelIndex)
 	Outfitter_CancelDialogs(); -- Force any dialogs to close if they're open
 
@@ -1311,6 +1338,8 @@ function OutfitterItemDropDown_Initialize()
 			Outfitter_AddMenuItem(vFrame, DELETE, "DELETE");
 		end
 
+		Outfitter_AddMenuItem(vFrame, Outfitter_cUpdateToCurrent, "UPDATE");
+		
 		Outfitter_AddCategoryMenuItem(Outfitter_cBankCategoryTitle);
 		Outfitter_AddMenuItem(vFrame, Outfitter_cDepositToBank, "DEPOSIT", nil, nil, nil, not gOutfitter_BankFrameOpened);
 		Outfitter_AddMenuItem(vFrame, Outfitter_cDepositUniqueToBank, "DEPOSITUNIQUE", nil, nil, nil, not gOutfitter_BankFrameOpened);
@@ -4163,6 +4192,23 @@ function Outfitter_DeleteOutfit(pOutfit)
 	gOutfitter_DisplayIsDirty = true;
 end
 
+function Outfitter_UpdateOutfit(pOutfit)
+
+	local	vOutfitCategoryID, vOutfitIndex = Outfitter_FindOutfit(pOutfit);
+	local name = pOutfit.Name
+
+	if not vOutfitCategoryID then
+		return;
+	end
+
+	local UpdatedpOutfit = Outfitter_GetInventoryOutfit()
+	pOutfit.Items = UpdatedpOutfit.Items
+
+	gOutfitter_Settings.Outfits[vOutfitCategoryID][vOutfitIndex] = pOutfit
+
+	gOutfitter_DisplayIsDirty = true;
+end
+
 function Outfitter_AddOutfit(pOutfit)
 	local vCategoryID;
 
@@ -4843,6 +4889,8 @@ function Outfitter_OutfitItemSelected(pMenu, pValue)
 		Outfitter_SetOutfitBindingIndex(vOutfit, tonumber(string.sub(pValue, 8)));
 	elseif pValue == "REBUILD" then
 		Outfitter_AskRebuildOutfit(vOutfit, vCategoryID);
+	elseif pValue == "UPDATE" then
+		Outfitter_AskUpdateOutfit(vOutfit, vCategoryID);
 	elseif pValue == "DEPOSIT" then
 		Outfitter_DepositOutfit(vOutfit);
 	elseif pValue == "DEPOSITUNIQUE" then

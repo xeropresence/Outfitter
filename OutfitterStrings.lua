@@ -1,4 +1,4 @@
-Outfitter_cVersion = "1.5.0";
+Outfitter_cVersion = "1.5.1";
 
 Outfitter_cTitle = "Outfitter";
 Outfitter_cTitleVersion = Outfitter_cTitle .. " " .. Outfitter_cVersion;
@@ -65,8 +65,11 @@ Outfitter_cEnableAll = "Enable all";
 Outfitter_cEnableNone = "Enable none";
 
 Outfitter_cConfirmDeleteMsg = "Are you sure you want to delete the outfit %s?";
+Outfitter_cConfirmUpdateMsg = "Are you sure you want to update the outfit %s to your current outfit?";
 Outfitter_cConfirmRebuildMsg = "Are you sure you want to rebuild the outfit %s?";
 Outfitter_cRebuild = "Rebuild";
+Outfitter_cUpdate = "Update";
+Outfitter_cUpdateToCurrent = "Update to current";
 
 Outfitter_cWesternPlaguelands = "Western Plaguelands";
 Outfitter_cEasternPlaguelands = "Eastern Plaguelands";
