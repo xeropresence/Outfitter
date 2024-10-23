@@ -1,5 +1,7 @@
 gOutfitter_Settings = nil;
 
+local AceEvent = AceLibrary:HasInstance("AceEvent-2.0") and AceLibrary("AceEvent-2.0")
+
 local Outfitter_cInitializationEvent = "PLAYER_ENTERING_WORLD";
 
 local BANKED_FONT_COLOR = { r = 0.25, g = 0.2, b = 1.0 };
@@ -350,6 +352,7 @@ local Outfitter_cSpecialOutfitDescriptions = {
 	City = Outfitter_cCityOutfitDescription,
 	Boss = Outfitter_cBossOutfitDescription,
 	Trash = Outfitter_cTrashOutfitDescription,
+	Critter = Outfitter_cCritterOutfitDescription,
 	BeastTrash = Outfitter_cBeastTrashOutfitDescription,
 	UndeadTrash = Outfitter_cUndeadTrashOutfitDescription,
 	DemonTrash = Outfitter_cDemonTrashOutfitDescription,
@@ -962,7 +965,7 @@ end
 function Outfitter_TargetChangedDelayedEvent()
 	local newTarget = UnitName("target");
 	-- check if target actually changed
-	if newTarget == gOutfitter_CurrentTarget then
+	if newTarget == gOutfitter_CurrentTarget or UnitIsDead("target") then
 		return ;
 	end
 
@@ -973,11 +976,15 @@ function Outfitter_TargetChangedDelayedEvent()
 	if UnitLevel("target") == -1 then
 		Outfitter_SetSpecialOutfitEnabled("Boss", true);
 		Outfitter_SetSpecialOutfitEnabled("Trash", false);
+		Outfitter_SetSpecialOutfitEnabled("Critter", false);
+	elseif UnitCreatureType("target") == Outfitter_cCritter then
+		Outfitter_SetSpecialOutfitEnabled("Critter", true);
 		Outfitter_SetSpecialOutfitEnabled("BeastTrash", false);
 		Outfitter_SetSpecialOutfitEnabled("UndeadTrash", false);
 		Outfitter_SetSpecialOutfitEnabled("DemonTrash", false);
 	elseif UnitLevel("target") > 0 then
 		-- check if boss trash
+		Outfitter_SetSpecialOutfitEnabled("Critter", false);
 		if gBossTrashNames[UnitName("target")] then
 			Outfitter_SetSpecialOutfitEnabled("Boss", true);
 			Outfitter_SetSpecialOutfitEnabled("Trash", false);
@@ -1014,6 +1021,7 @@ function Outfitter_TargetChangedDelayedEvent()
 		Outfitter_SetSpecialOutfitEnabled("BeastTrash", false);
 		Outfitter_SetSpecialOutfitEnabled("UndeadTrash", false);
 		Outfitter_SetSpecialOutfitEnabled("DemonTrash", false);
+		Outfitter_SetSpecialOutfitEnabled("Critter", false);
 	end
 end
 
@@ -4504,6 +4512,14 @@ function Outfitter_InitializeSpecialOccassionOutfits()
 	if not vOutfit then
 		Outfitter_CreateEmptySpecialOccassionOutfit("Trash", Outfitter_cTrashOutfit);
 		vOutfit = Outfitter_GetSpecialOutfit("Trash");
+		vOutfit.Disabled = true; -- Disable it by default
+	end
+
+	-- Create critter outfit if needed
+	vOutfit = Outfitter_GetSpecialOutfit("Critter");
+	if not vOutfit then
+		Outfitter_CreateEmptySpecialOccassionOutfit("Critter", Outfitter_cCritterOutfit);
+		vOutfit = Outfitter_GetSpecialOutfit("Critter");
 		vOutfit.Disabled = true; -- Disable it by default
 	end
 
