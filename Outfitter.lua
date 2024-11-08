@@ -587,9 +587,10 @@ local function Outfitter_CreateCurrentOutfitFrame()
 		insets = { left = 4, right = 4, top = 4, bottom = 4 }
 	})
 	frame:SetBackdropColor(0, 0, 0, 1) -- Black background with full opacity
-
 	frame:SetMovable(true)
 	frame:EnableMouse(true)
+
+	frame:SetFrameStrata("HIGH")
 
 	-- Create a FontString for currently equipped outfits
 	frame.equippedOutfits = frame:CreateFontString(nil, "DIALOG", "GameFontNormal")
