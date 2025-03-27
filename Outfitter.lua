@@ -331,6 +331,7 @@ local gOutfitter_SpellNameSpecialID = {
 
 local gOutfitter_AuraIconSpecialID = {
 	["INV_Misc_Fork&Knife"] = "Dining",
+	["INV_Misc_Food_28"] = "Dining",
 	["Spell_Shadow_Shadowform"] = "Shadowform",
 	["Spell_Nature_SpiritWolf"] = "GhostWolf",
 	["Ability_Rogue_FeignDeath"] = "Feigning",
