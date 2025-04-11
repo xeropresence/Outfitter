@@ -609,6 +609,16 @@ local function Outfitter_CreateCurrentOutfitFrame()
 	frame:SetScript("OnDragStop", function()
 		frame:StopMovingOrSizing()
 	end)
+	frame:SetScript("OnMouseUp", function()
+		if arg1 == "RightButton" then
+			if not this.dropdown then
+				this.dropdown = CreateFrame("Frame", "OutfitterCurrentOutfitDropDown");			
+				OutfitterMinimapDropDown_OnLoad( this.dropdown );			
+				this.dropdown.ChangedValueFunc = OutfitterMinimapButton_ItemSelected;
+			end
+			ToggleDropDownMenu(nil, nil, this.dropdown, this:GetName(), 2, 2);
+		end
+	end)
 	frame:Hide()
 
 	return frame
@@ -1453,9 +1463,12 @@ function Outfitter_SetHideDisabledOutfits(pHideDisabledOutfits)
 	Outfitter_Update(false);
 end
 
-function OutfitterMinimapDropDown_OnLoad()
-	UIDropDownMenu_SetAnchor(3, -7, this, "TOPRIGHT", this:GetName(), "TOPLEFT");
-	UIDropDownMenu_Initialize(this, OutfitterMinimapDropDown_Initialize);
+function OutfitterMinimapDropDown_OnLoad(dropdown)
+	if ( not dropdown ) then
+		dropdown = this;
+	end
+	UIDropDownMenu_SetAnchor(3, -7, dropdown, "TOPRIGHT", this:GetName(), "TOPLEFT");
+	UIDropDownMenu_Initialize(dropdown, OutfitterMinimapDropDown_Initialize);
 	--UIDropDownMenu_Refresh(this); -- Don't refresh on menus which don't have a text portion
 
 	Outfitter_RegisterOutfitEvent("WEAR_OUTFIT", OutfitterMinimapDropDown_OutfitEvent);
