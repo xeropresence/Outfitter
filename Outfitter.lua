@@ -399,6 +399,7 @@ local Outfitter_cZoneSpecialIDMap = {
 	[Outfitter_cZG] = { "Instance" },
 	[Outfitter_cES] = { "Instance" },
 	[Outfitter_cBM] = { "Instance" },
+	[Outfitter_cK40] = { "Instance" },
 };
 
 local gOutfitter_StatDistribution = {

@@ -97,6 +97,7 @@ Outfitter_cAQ40 = "Ahn'Qiraj";
 Outfitter_cZG = "Zul'Gurub";
 Outfitter_cES = "Emerald Sanctum";
 Outfitter_cBM = "The Black Morass";
+Outfitter_cK40 = "???";
 
 Outfitter_cFishingPole = "Fishing Pole";
 Outfitter_cStrongFishingPole = "Strong Fishing Pole";
