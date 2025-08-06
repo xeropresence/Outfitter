@@ -1034,7 +1034,8 @@ function Outfitter_InventoryChanged(pEvent)
 		return ;
 	end
 
-	Outfitter_InventoryChanged2();
+	-- debounce the event to avoid doing the same logic many times when swapping sets
+	AceEvent:ScheduleEvent("OutfitterUnitInventoryChanged", Outfitter_InventoryChanged2, 0.5)
 end
 
 function Outfitter_InventoryChanged2()
