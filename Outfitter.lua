@@ -1,8 +1,86 @@
 gOutfitter_Settings = nil;
 
+-- Profiling System
+local Outfitter_Profiling = {
+	enabled = false,
+	data = {},
+	startTime = nil,
+	minTime = 0.001, -- Minimum time in seconds to report (1ms)
+}
+
+function Outfitter_StartProfiling()
+	Outfitter_Profiling.enabled = true
+	Outfitter_Profiling.data = {}
+	Outfitter_Profiling.startTime = GetTime()
+	DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00Outfitter Profiling Started|r")
+end
+
+function Outfitter_StopProfiling()
+	if not Outfitter_Profiling.enabled then
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFFF0000Outfitter Profiling is not running|r")
+		return
+	end
+	
+	Outfitter_Profiling.enabled = false
+	local totalTime = GetTime() - Outfitter_Profiling.startTime
+	
+	DEFAULT_CHAT_FRAME:AddMessage("|cFF00FF00Outfitter Profiling Stopped|r")
+	DEFAULT_CHAT_FRAME:AddMessage(string.format("|cFFFFFF00Total profiling time: %.3f seconds|r", totalTime))
+	
+	-- Sort by total time
+	local sorted = {}
+	for name, info in pairs(Outfitter_Profiling.data) do
+		table.insert(sorted, {name = name, info = info})
+	end
+	table.sort(sorted, function(a, b) return a.info.totalTime > b.info.totalTime end)
+	
+	-- Report top functions
+	DEFAULT_CHAT_FRAME:AddMessage("|cFF00FFFFTop functions by total time:|r")
+	local reported = 0
+	for i, entry in ipairs(sorted) do
+		if entry.info.totalTime >= Outfitter_Profiling.minTime then
+			local avgTime = entry.info.totalTime / entry.info.count
+			DEFAULT_CHAT_FRAME:AddMessage(string.format(
+				"|cFFFFFFFF%d. %s: %.3fs total, %d calls, %.6fs avg|r",
+				i, entry.name, entry.info.totalTime, entry.info.count, avgTime
+			))
+			reported = reported + 1
+			if reported >= 20 then break end -- Limit to top 20
+		end
+	end
+	
+	if reported == 0 then
+		DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF00No functions exceeded the minimum threshold of " .. (Outfitter_Profiling.minTime * 1000) .. "ms|r")
+	end
+end
+
+function Outfitter_ProfileFunction(funcName, func)
+	return function(...)
+		if not Outfitter_Profiling.enabled then
+			return func(unpack(arg))
+		end
+		
+		local startTime = GetTime()
+		local results = {func(unpack(arg))}
+		local elapsed = GetTime() - startTime
+		
+		if not Outfitter_Profiling.data[funcName] then
+			Outfitter_Profiling.data[funcName] = {totalTime = 0, count = 0}
+		end
+		
+		Outfitter_Profiling.data[funcName].totalTime = Outfitter_Profiling.data[funcName].totalTime + elapsed
+		Outfitter_Profiling.data[funcName].count = Outfitter_Profiling.data[funcName].count + 1
+		
+		return unpack(results)
+	end
+end
+
 local AceEvent = AceLibrary:HasInstance("AceEvent-2.0") and AceLibrary("AceEvent-2.0")
 
 local Outfitter_cInitializationEvent = "PLAYER_ENTERING_WORLD";
+
+-- BOE (Bind on Equip) cache to avoid repeated tooltip operations
+local Outfitter_BOECache = {};
 
 local BANKED_FONT_COLOR = { r = 0.25, g = 0.2, b = 1.0 };
 local BANKED_FONT_COLOR_CODE = "|cff4033ff";
@@ -759,6 +837,9 @@ end
 function Outfitter_PlayerEnteringWorld()
 	OutfitterItemList_FlushEquippableItems();
 
+	-- Clear BOE cache on login/reload
+	Outfitter_BOECache = {};
+
 	Outfitter_RegenEnabled();
 	Outfitter_UpdateAuraStates();
 	Outfitter_SetSpecialOutfitEnabled("Riding", false);
@@ -1137,6 +1218,8 @@ function Outfitter_ExecuteCommand(pCommand)
 		unwear = { useOutfit = true, func = Outfitter_RemoveOutfit },
 		toggle = { useOutfit = true, func = Outfitter_ToggleOutfit },
 		summary = { useOutfit = false, func = Outfitter_OutfitSummary },
+		profile = { useOutfit = false, func = Outfitter_StartProfiling },
+		stopprofile = { useOutfit = false, func = Outfitter_StopProfiling },
 	}
 
 	local vStartIndex, vEndIndex, vCommand, vParameter = string.find(pCommand, "(%w+) ?(.*)");
@@ -1145,6 +1228,8 @@ function Outfitter_ExecuteCommand(pCommand)
 		Outfitter_NoteMessage(HIGHLIGHT_FONT_COLOR_CODE .. "/outfitter wear <outfit name>" .. NORMAL_FONT_COLOR_CODE .. ": Wear an outfit");
 		Outfitter_NoteMessage(HIGHLIGHT_FONT_COLOR_CODE .. "/outfitter unwear <outfit name>" .. NORMAL_FONT_COLOR_CODE .. ": Remove an outfit");
 		Outfitter_NoteMessage(HIGHLIGHT_FONT_COLOR_CODE .. "/outfitter toggle <outfit name>" .. NORMAL_FONT_COLOR_CODE .. ": Wears or removes an outfit");
+		Outfitter_NoteMessage(HIGHLIGHT_FONT_COLOR_CODE .. "/outfitter profile" .. NORMAL_FONT_COLOR_CODE .. ": Start profiling");
+		Outfitter_NoteMessage(HIGHLIGHT_FONT_COLOR_CODE .. "/outfitter stopprofile" .. NORMAL_FONT_COLOR_CODE .. ": Stop profiling and show report");
 		return ;
 	end
 
@@ -4653,12 +4738,28 @@ function Outfitter_BagItemWillBind(pBagIndex, pBagSlotIndex)
 		return nil;
 	end
 
+	-- Check cache first
+	if Outfitter_BOECache[vItemLink] ~= nil then
+		return Outfitter_BOECache[vItemLink];
+	end
+
+	-- Check if item is loaded using GetItemInfo
+	local itemName, _, _, _, _, _, _, _, itemIcon = GetItemInfo(vItemLink);
+	if not itemIcon then
+		-- Item not loaded yet, don't cache
+		return nil;
+	end
+
+	-- Item is loaded, proceed with tooltip check
 	OutfitterTooltip:SetOwner(OutfitterFrame, "ANCHOR_BOTTOMRIGHT", 0, 0);
 	OutfitterTooltip:SetBagItem(pBagIndex, pBagSlotIndex);
 
 	local vIsBOE = Outfitter_TooltipContainsText(OutfitterTooltip, ITEM_BIND_ON_EQUIP);
 
 	OutfitterTooltip:Hide();
+
+	-- Cache the result
+	Outfitter_BOECache[vItemLink] = vIsBOE;
 
 	return vIsBOE;
 end
@@ -6777,4 +6878,157 @@ function Outfitter_TestAmmoSlot()
 	Outfitter_TestMessage("ItemLink: " .. vItemLink);
 
 	Outfitter_DumpArray("vItemInfo", vItemInfo);
+end
+
+-- Apply profiling to all major Outfitter functions
+local functionsToProfile = {
+	-- Core functions
+	"Outfitter_OnEvent",
+	"Outfitter_OnShow",
+	"Outfitter_OnHide",
+	"Outfitter_Update",
+	"Outfitter_UpdateSlotEnables",
+	
+	-- Event handlers
+	"Outfitter_PlayerEnteringWorld",
+	"Outfitter_PlayerLeavingWorld",
+	"Outfitter_VariablesLoaded",
+	"Outfitter_BankSlotsChanged",
+	"Outfitter_BagUpdate",
+	"Outfitter_BankFrameOpened",
+	"Outfitter_BankFrameClosed",
+	"Outfitter_RegenEnabled",
+	"Outfitter_RegenDisabled",
+	"Outfitter_InventoryChanged",
+	"Outfitter_InventoryChanged2",
+	"Outfitter_TargetChanged",
+	"Outfitter_TargetChangedDelayedEvent",
+	"Outfitter_UnitHealthOrManaChanged",
+	
+	-- Outfit management
+	"Outfitter_WearOutfit",
+	"Outfitter_RemoveOutfit",
+	"Outfitter_ToggleOutfit",
+	"Outfitter_GetCompiledOutfit",
+	"Outfitter_GetExpectedOutfit",
+	"Outfitter_FindOutfit",
+	"Outfitter_FindOutfitByName",
+	"Outfitter_FindOutfitByStatID",
+	"Outfitter_DeleteOutfit",
+	"Outfitter_UpdateOutfit",
+	"Outfitter_AddOutfit",
+	"Outfitter_GetInventoryOutfit",
+	"Outfitter_UpdateOutfitFromInventory",
+	"Outfitter_SubtractOutfit",
+	"Outfitter_GetNewItemsOutfit",
+	"Outfitter_UpdateTemporaryOutfit",
+	"Outfitter_GenerateSmartOutfit",
+	"Outfitter_WearingOutfit",
+	"Outfitter_GetCurrentOutfitInfo",
+	
+	-- Equipment management
+	"Outfitter_BuildUnequipChangeList",
+	"Outfitter_BuildEquipmentChangeList",
+	"Outfitter_OptimizeEquipmentChangeList",
+	"Outfitter_ExecuteEquipmentChangeList",
+	"Outfitter_ExecuteEquipmentChangeList2",
+	"Outfitter_BeginEquipmentUpdate",
+	"Outfitter_EndEquipmentUpdate",
+	"Outfitter_UpdateEquippedItems",
+	
+	-- Inventory functions
+	"Outfitter_GetEmptyBagSlot",
+	"Outfitter_GetEmptyBagSlotList",
+	"Outfitter_GetEmptyBankSlotList",
+	"Outfitter_FindItemsInBagsForSlot",
+	"Outfitter_PickupItemLocation",
+	"Outfitter_GetBagItemInfo",
+	"Outfitter_GetInventoryItemInfo",
+	"Outfitter_GetItemInfoFromLink",
+	"Outfitter_FindAmmoSlotItem",
+	"Outfitter_CanEquipBagItem",
+	"Outfitter_BagItemWillBind",
+	
+	-- UI functions
+	"Outfitter_ToggleOutfitterFrame",
+	"Outfitter_ShowPanel",
+	"Outfitter_HidePanel",
+	"Outfitter_SelectOutfit",
+	"Outfitter_ClearSelection",
+	"Outfitter_FindOutfitItemIndex",
+	"Outfitter_OnVerticalScroll",
+	"Outfitter_SortOutfits",
+	"Outfitter_GetCategoryOrder",
+	"Outfitter_GetOutfitsByCategoryID",
+	"Outfitter_AddOutfitsToList",
+	"Outfitter_AddOutfitItemsToList",
+	"Outfitter_OutfitIsVisible",
+	"Outfitter_HasVisibleOutfits",
+	
+	-- Special outfit functions
+	"Outfitter_GetSpecialOutfit",
+	"Outfitter_SetSpecialOutfitEnabled",
+	"Outfitter_WearingSpecialOutfit",
+	"Outfitter_UpdateAuraStates",
+	"Outfitter_UpdateShapeshiftState",
+	"Outfitter_UpdateZone",
+	"Outfitter_GetPlayerAuraStates",
+	
+	-- Database functions
+	"Outfitter_CheckDatabase",
+	"Outfitter_CheckOutfit",
+	"Outfitter_UpdateDatabaseItemCodes",
+	
+	-- Initialization
+	"Outfitter_Initialize",
+	"Outfitter_InitializeOutfits",
+	"Outfitter_InitializeSpecialOccassionOutfits",
+	"Outfitter_InitializeClassOutfits",
+	
+	-- Utility functions
+	"Outfitter_DispatchOutfitEvent",
+	"Outfitter_RegisterEvent",
+	"Outfitter_UnregisterEvent",
+	"Outfitter_DispatchEvent",
+	"Outfitter_ExecuteCommand",
+	"Outfitter_SetSlotEnable",
+	"Outfitter_SetAllSlotEnables",
+	"Outfitter_OutfitIsComplete",
+	"Outfitter_CalculateOutfitCategory",
+	"Outfitter_UpdateOutfitCategory",
+	
+	-- Deposit/Withdraw
+	"Outfitter_DepositOutfit",
+	"Outfitter_WithdrawOutfit",
+	
+	-- Stats and tooltips
+	"Outfitter_GetItemStatsFromTooltip",
+	"Outfitter_TooltipContainsText",
+	"Outfitter_GetPlayerStat",
+	"Outfitter_GetStatIDName",
+	
+	-- PaperDoll integration
+	"Outfitter_HookPaperDollFrame",
+	"Outfitter_PaperDollItemSlotButton_OnClick",
+	
+	-- Helper functions that might be called frequently
+	"Outfitter_GetNumBags",
+	"Outfitter_IsBankBagIndex",
+	"Outfitter_InBattlegroundZone",
+	"Outfitter_InInstanceZone",
+	"Outfitter_IsInitialized",
+	"Outfitter_IsEmptyOutfit",
+	"Outfitter_OutfitIsAmmoOnly",
+	"Outfitter_OutfitHasCombatEquipmentSlots",
+	"Outfitter_OutfitOnlyHasCombatEquipmentSlots",
+	"Outfitter_ArrayIsEmpty",
+	"Outfitter_InventorySlotIsEmpty",
+}
+
+-- Wrap all functions with profiling
+for _, funcName in ipairs(functionsToProfile) do
+	local func = getglobal(funcName)
+	if func then
+		setglobal(funcName, Outfitter_ProfileFunction(funcName, func))
+	end
 end
