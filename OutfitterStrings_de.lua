@@ -37,6 +37,7 @@ if GetLocale() == "deDE" then
 	Outfitter_cDiningOutfit = "Ausruhen";
 	Outfitter_cBattlegroundOutfit = "Schlachtfeld";
 	Outfitter_cBossOutfit = "Boss Mobs";
+	Outfitter_cLvl63Outfit = "Lvl63+";
 	Outfitter_cTrashOutfit = "Trash Mobs";
 	Outfitter_cBeastTrashOutfit = "Beast Trash Mobs";
 	Outfitter_cUndeadTrashOutfit = "Undead Trash Mobs";
@@ -225,7 +226,8 @@ if GetLocale() == "deDE" then
 	Outfitter_cAlteracValleyOutfitDescription = "This outfit will automatically be worn whenever you're in the Alterac Valley battleground";
 	Outfitter_cWarsongGulchOutfitDescription = "This outfit will automatically be worn whenever you're in the Warsong Gulch battleground";
 	Outfitter_cCityOutfitDescription = "This outfit will automatically be worn whenever you're in a friendly major city";
-	Outfitter_cBossOutfitDescription = "This outfit will automatically be worn whenever you target level 63+ mobs";
+	Outfitter_cBossOutfitDescription = "This outfit will automatically be worn whenever you target level 63+ Boss mobs";
+	Outfitter_cLvl63OutfitDescription = "This outfit will automatically be worn whenever you target level 63+ mobs";
 	Outfitter_cTrashOutfitDescription = "This outfit will automatically be worn whenever you target level <63 mobs";
 	Outfitter_cBeastTrashOutfitDescription = "This outfit will automatically be worn whenever you target beasts level <63 mobs";
 	Outfitter_cUndeadTrashOutfitDescription = "This outfit will automatically be worn whenever you target undead level <63 mobs";

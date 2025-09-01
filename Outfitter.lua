@@ -354,6 +354,7 @@ local Outfitter_cSpecialOutfitDescriptions = {
 	SGV = Outfitter_cSunnygladeValleyOutfitDescription,
 	City = Outfitter_cCityOutfitDescription,
 	Boss = Outfitter_cBossOutfitDescription,
+	Lvl63 = Outfitter_cLvl63OutfitDescription,
 	Trash = Outfitter_cTrashOutfitDescription,
 	Critter = Outfitter_cCritterOutfitDescription,
 	BeastTrash = Outfitter_cBeastTrashOutfitDescription,
@@ -401,6 +402,7 @@ local Outfitter_cZoneSpecialIDMap = {
 	[Outfitter_cZG] = { "Instance" },
 	[Outfitter_cES] = { "Instance" },
 	[Outfitter_cBM] = { "Instance" },
+	[Outfitter_cK40] = { "Instance" },
 };
 
 local gOutfitter_StatDistribution = {
@@ -1022,26 +1024,37 @@ function Outfitter_TargetChangedDelayedEvent()
 
 	-- check level of target
 	-- -1 indicates ? (lvl 63+) unit
-	if UnitLevel("target") == -1 then
+	local level = UnitLevel("target");
+	if level == -1 then
 		Outfitter_SetSpecialOutfitEnabled("Boss", true);
+		Outfitter_SetSpecialOutfitEnabled("Lvl63", true);
+		Outfitter_SetSpecialOutfitEnabled("Trash", false);
+		Outfitter_SetSpecialOutfitEnabled("Critter", false);
+	elseif level >= 63 then
+		Outfitter_SetSpecialOutfitEnabled("Boss", false);
+		Outfitter_SetSpecialOutfitEnabled("Lvl63", true);
 		Outfitter_SetSpecialOutfitEnabled("Trash", false);
 		Outfitter_SetSpecialOutfitEnabled("Critter", false);
 	elseif UnitCreatureType("target") == Outfitter_cCritter then
 		Outfitter_SetSpecialOutfitEnabled("Critter", true);
+		Outfitter_SetSpecialOutfitEnabled("Lvl63", false);
+		Outfitter_SetSpecialOutfitEnabled("Boss", false);
 		Outfitter_SetSpecialOutfitEnabled("BeastTrash", false);
 		Outfitter_SetSpecialOutfitEnabled("UndeadTrash", false);
 		Outfitter_SetSpecialOutfitEnabled("DemonTrash", false);
-	elseif UnitLevel("target") > 0 then
+	elseif level > 0 then
 		-- check if boss trash
 		Outfitter_SetSpecialOutfitEnabled("Critter", false);
 		if gBossTrashNames[UnitName("target")] then
 			Outfitter_SetSpecialOutfitEnabled("Boss", true);
+			Outfitter_SetSpecialOutfitEnabled("Lvl63", true);
 			Outfitter_SetSpecialOutfitEnabled("Trash", false);
 			Outfitter_SetSpecialOutfitEnabled("BeastTrash", false);
 			Outfitter_SetSpecialOutfitEnabled("UndeadTrash", false);
 			Outfitter_SetSpecialOutfitEnabled("DemonTrash", false);
 		else
 			Outfitter_SetSpecialOutfitEnabled("Boss", false);
+			Outfitter_SetSpecialOutfitEnabled("Lvl63", false);
 			Outfitter_SetSpecialOutfitEnabled("Trash", true);
 
 			local creatureType = UnitCreatureType("target");
@@ -1066,6 +1079,7 @@ function Outfitter_TargetChangedDelayedEvent()
 		end
 	else
 		Outfitter_SetSpecialOutfitEnabled("Boss", false);
+		Outfitter_SetSpecialOutfitEnabled("Lvl63", false);
 		Outfitter_SetSpecialOutfitEnabled("Trash", false);
 		Outfitter_SetSpecialOutfitEnabled("BeastTrash", false);
 		Outfitter_SetSpecialOutfitEnabled("UndeadTrash", false);
@@ -1079,7 +1093,8 @@ function Outfitter_InventoryChanged(pEvent)
 		return ;
 	end
 
-	Outfitter_InventoryChanged2();
+	-- debounce the event to avoid doing the same logic many times when swapping sets
+	AceEvent:ScheduleEvent("OutfitterUnitInventoryChanged", Outfitter_InventoryChanged2, 0.5)
 end
 
 function Outfitter_InventoryChanged2()
@@ -4561,6 +4576,14 @@ function Outfitter_InitializeSpecialOccassionOutfits()
 	if not vOutfit then
 		Outfitter_CreateEmptySpecialOccassionOutfit("Boss", Outfitter_cBossOutfit);
 		vOutfit = Outfitter_GetSpecialOutfit("Boss");
+		vOutfit.Disabled = true; -- Disable it by default
+	end
+
+	-- Create Lvl63+ outfit if needed
+	vOutfit = Outfitter_GetSpecialOutfit("Lvl63");
+	if not vOutfit then
+		Outfitter_CreateEmptySpecialOccassionOutfit("Lvl63", Outfitter_cLvl63Outfit);
+		vOutfit = Outfitter_GetSpecialOutfit("Lvl63");
 		vOutfit.Disabled = true; -- Disable it by default
 	end
 

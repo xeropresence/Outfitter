@@ -45,6 +45,7 @@ Outfitter_cBROutfit = "Battleground: Blood Ring";
 Outfitter_cSGVOutfit = "Battleground: Sunnyglade Valley";
 Outfitter_cCityOutfit = "Around Town";
 Outfitter_cBossOutfit = "Boss Mobs";
+Outfitter_cLvl63Outfit = "Lvl63+";
 Outfitter_cTrashOutfit = "Trash Mobs";
 Outfitter_cCritterOutfit = "Critters";
 
@@ -97,6 +98,7 @@ Outfitter_cAQ40 = "Ahn'Qiraj";
 Outfitter_cZG = "Zul'Gurub";
 Outfitter_cES = "Emerald Sanctum";
 Outfitter_cBM = "The Black Morass";
+Outfitter_cK40 = "The Rock of Desolation";
 
 Outfitter_cFishingPole = "Fishing Pole";
 Outfitter_cStrongFishingPole = "Strong Fishing Pole";
@@ -267,7 +269,8 @@ Outfitter_cWarsongGulchOutfitDescription = "This outfit will automatically be wo
 Outfitter_cBloodRingOutfitDescription = "This outfit will automatically be worn whenever you're in the Blood Ring battleground";
 Outfitter_cSunnygladeValleyOutfitDescription = "This outfit will automatically be worn whenever you're in the Sunnyglade Valley battleground";
 Outfitter_cCityOutfitDescription = "This outfit will automatically be worn whenever you're in a friendly major city";
-Outfitter_cBossOutfitDescription = "This outfit will automatically be worn whenever you target level 63+ mobs";
+Outfitter_cBossOutfitDescription = "This outfit will automatically be worn whenever you target level 63+ Boss mobs";
+Outfitter_cLvl63OutfitDescription = "This outfit will automatically be worn whenever you target level 63+ mobs";
 Outfitter_cTrashOutfitDescription = "This outfit will automatically be worn whenever you target level <63 mobs";
 Outfitter_cCritterOutfitDescription = "This outfit will automatically be worn whenever you target a critter";
 Outfitter_cBeastTrashOutfitDescription = "This outfit will automatically be worn whenever you target beasts level <63 mobs";
