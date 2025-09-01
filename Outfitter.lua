@@ -6850,6 +6850,8 @@ function Outfitter_pfUISkin()
 	if IsAddOnLoaded( "pfUI" ) and pfUI and pfUI.api and pfUI.env and pfUI.env.C then
 		pfUI:RegisterSkin( "Outfitter", "vanilla", function()
 			OutfitterButton:SetPoint( "TOPRIGHT", -28, -40 )
+			OutfitterButton:SetNormalTexture("Interface\\Addons\\Outfitter\\Textures\\Outfitter-Button-pfUI")
+			OutfitterButton:SetPushedTexture("Interface\\Addons\\Outfitter\\Textures\\Outfitter-Button-pfUI")
 
 			pfUI.api.StripTextures( OutfitterFrame )
 			pfUI.api.CreateBackdrop( OutfitterFrame, nil, nil, .75 )
