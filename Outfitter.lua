@@ -4,6 +4,9 @@ local AceEvent = AceLibrary:HasInstance("AceEvent-2.0") and AceLibrary("AceEvent
 
 local Outfitter_cInitializationEvent = "PLAYER_ENTERING_WORLD";
 
+-- BOE (Bind on Equip) cache to avoid repeated tooltip operations
+local Outfitter_BOECache = {};
+
 local BANKED_FONT_COLOR = { r = 0.25, g = 0.2, b = 1.0 };
 local BANKED_FONT_COLOR_CODE = "|cff4033ff";
 local OUTFIT_MESSAGE_COLOR = { r = 0.2, g = 0.75, b = 0.3 };
@@ -761,6 +764,9 @@ end
 
 function Outfitter_PlayerEnteringWorld()
 	OutfitterItemList_FlushEquippableItems();
+
+	-- Clear BOE cache on login/reload
+	Outfitter_BOECache = {};
 
 	Outfitter_RegenEnabled();
 	Outfitter_UpdateAuraStates();
@@ -4677,12 +4683,28 @@ function Outfitter_BagItemWillBind(pBagIndex, pBagSlotIndex)
 		return nil;
 	end
 
+	-- Check cache first
+	if Outfitter_BOECache[vItemLink] ~= nil then
+		return Outfitter_BOECache[vItemLink];
+	end
+
+	-- Check if item is loaded using GetItemInfo
+	local itemName, _, _, _, _, _, _, _, itemIcon = GetItemInfo(vItemLink);
+	if not itemIcon then
+		-- Item not loaded yet, don't cache
+		return nil;
+	end
+
+	-- Item is loaded, proceed with tooltip check
 	OutfitterTooltip:SetOwner(OutfitterFrame, "ANCHOR_BOTTOMRIGHT", 0, 0);
 	OutfitterTooltip:SetBagItem(pBagIndex, pBagSlotIndex);
 
 	local vIsBOE = Outfitter_TooltipContainsText(OutfitterTooltip, ITEM_BIND_ON_EQUIP);
 
 	OutfitterTooltip:Hide();
+
+	-- Cache the result
+	Outfitter_BOECache[vItemLink] = vIsBOE;
 
 	return vIsBOE;
 end
